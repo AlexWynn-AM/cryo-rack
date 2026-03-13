@@ -207,3 +207,10 @@ blockquote {
     color: #777;
     margin-top: 2em;
 }
+
+.title-block .title-image {
+    max-width: 280px;
+    margin: 2em auto 1em auto;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}

@@ -12,8 +12,6 @@ date: "2026-03-10"
 
 ## Executive Summary
 
-![Cryo rack concept render](assets/cryo_rack_render.jpg)
-
 This document describes the design of a self-contained cryogenic rack
 for deploying AQFP (Adiabatic Quantum Flux Parametron) superconducting
 processors at 4.2 K. The system is built entirely from off-the-shelf and
