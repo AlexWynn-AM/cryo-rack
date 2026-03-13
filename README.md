@@ -12,7 +12,7 @@ Design and procure a cryogenic demonstration rack using off-the-shelf components
 |-------------------|---------|--------------------------------|
 | Vertiv            | Planned | Demo system, primary target    |
 | CBA               | Planned | Independent test infrastructure|
-| Adiabatic Machines| Planned |                                |
+| Adiabatic Machines| Planned | Integration system for Adiabatic Computing|
 
 ## Repository Structure
 
