@@ -28,7 +28,7 @@ for portability between sites.
 | Thermal margin | >90% on both stages (with MLI) |
 | Power | 120V / 15A standard wall outlet (~2 kW total) |
 | Cooling water | Not required |
-| Form factor | 19-inch rack + floor-standing compressor |
+| Form factor | 19-inch rack (compressor rack-mounted) |
 | Vacuum | HiCube 80 Eco turbo station, <10⁻⁸ Torr ultimate |
 | Magnetic shielding | FINEMET (40 K) + superconducting Pb foil (4 K) |
 | Cooldown time | ~60–90 minutes to 4 K |
@@ -157,7 +157,7 @@ ports. Pumping connects via KF-25 ports on the vessel body.
 
 ```
   ┌─────────────────────────────────┐
-  │         COMPRESSOR              │  CNA-11RC, 120V, on floor / rack shelf
+  │         COMPRESSOR              │  CNA-11RC, 120V, rack-mounted
   │         (300 K)                 │
   └──────────┬──────────────────────┘
              │ flex lines (He supply + return)
@@ -440,7 +440,7 @@ isolation transformer to maintain a clean, isolated measurement ground
 |---|---|
 | Rack | 19-inch standard, ~20U minimum |
 | Rack footprint | ~0.6 x 0.8 m |
-| Compressor | Floor or shelf adjacent to rack, ~0.5 x 0.5 m |
+| Compressor | Rack-mounted (CNA-11RC fits 19-inch rack) |
 | Clearance | Allow ~0.5 m behind rack for cable routing and airflow |
 | Cryostat position | Top of rack or adjacent bench |
 
@@ -451,7 +451,7 @@ isolation transformer to maintain a clean, isolated measurement ground
 | Ambient temperature | 15–30 C (standard lab/office) |
 | Cooling water | **Not required** (air-cooled compressor) |
 | Ventilation | Standard room HVAC sufficient; compressor rejects ~1–2 kW as heat |
-| Floor loading | ~150–200 kg total (rack + compressor + cryostat) |
+| Floor loading | ~150–200 kg total (rack with compressor + cryostat) |
 | Vibration isolation | Not required for AQFP testing |
 
 ### Network (optional)
@@ -463,7 +463,7 @@ isolation transformer to maintain a clean, isolated measurement ground
 
 - [ ] Confirm availability of 2x 120V / 15A outlets near rack location
 - [ ] Confirm 19-inch rack (Vertiv may supply) or designate rack location
-- [ ] Confirm floor space for compressor adjacent to rack
+- [ ] Confirm rack has sufficient depth for compressor (~600 mm)
 - [ ] Confirm adequate room ventilation for ~2 kW heat rejection
 - [ ] Assign Ethernet drop if remote monitoring desired
 
