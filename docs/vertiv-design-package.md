@@ -72,7 +72,6 @@ flowchart TD
         sampleStage["4K Sample Stage\nOFHC Cu"]
         aqfpDie["AQFP Die"]
 
-        radShield -->|"2nd stage"| sampleStage
         sampleStage --> aqfpDie
     end
 
@@ -87,7 +86,8 @@ flowchart TD
     pumpStation -->|"KF-25 bellows"| cryostat
     tempController -->|"4-wire sensor"| feedthroughs
     testEquip -->|"BNC / SMA"| feedthroughs
-    feedthroughs --> sampleStage
+    feedthroughs -->|"heat-sunk"| radShield
+    radShield --> sampleStage
 
     gauge --> cryostat
     relief --> cryostat
