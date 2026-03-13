@@ -2,6 +2,8 @@
 
 Cryogenic rack system design and BOM for the CBA-Vertiv collaboration, with applicability to future Adiabatic Machines deployments.
 
+**[Design Package (PDF)](cryo-rack-design-package.pdf)** — Full system design documentation
+
 ## Project Goal
 
 Design and procure a cryogenic demonstration rack using off-the-shelf components, targeting a one-month build timeline. The system provides a 4K environment suitable for AQFP processor testing and demonstration.
