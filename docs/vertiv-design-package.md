@@ -62,20 +62,17 @@ flowchart TD
     gauge["Pirani Gauge"]
     relief["Pressure Relief Valve"]
 
-    subgraph cryostat["Cryostat Assembly"]
-        subgraph topPlate["Top Plate (300K)"]
-            feedthroughs["Feedthroughs\nD-sub x2, SMA x4"]
-            coldHeadMount["Cold Head\nMount"]
-        end
-        vessel["SS Vacuum Vessel\n6-inch CF Nipple"]
+    subgraph topInterface["Top Plate Interface (300K)"]
         coldHead["RDK-101D\nGM Cold Head"]
+        feedthroughs["Feedthroughs\nD-sub x2, SMA x4"]
+    end
+
+    subgraph cryostat["Cryostat (Al Vacuum Vessel)"]
         radShield["40K Radiation Shield\nAl + FINEMET + MLI"]
         sampleStage["4K Sample Stage\nCu + Pb Foil"]
         aqfpDie["AQFP Die"]
 
-        coldHeadMount --> coldHead
-        coldHead -->|"1st stage + Cu straps"| radShield
-        radShield -->|"2nd stage + Cu straps"| sampleStage
+        radShield -->|"2nd stage"| sampleStage
         sampleStage --> aqfpDie
     end
 
@@ -85,13 +82,15 @@ flowchart TD
     isoXfmr --> tempController
     isoXfmr --> testEquip
 
-    compressor -->|"He flex lines"| coldHeadMount
-    pumpStation -->|"KF-25 bellows"| vessel
+    compressor -->|"He flex lines"| coldHead
+    coldHead -->|"1st stage"| radShield
+    pumpStation -->|"KF-25 bellows"| cryostat
     tempController -->|"4-wire sensor"| feedthroughs
     testEquip -->|"BNC / SMA"| feedthroughs
+    feedthroughs --> sampleStage
 
-    gauge --> vessel
-    relief --> vessel
+    gauge --> cryostat
+    relief --> cryostat
 ```
 
 ### Thermal stages
@@ -228,9 +227,9 @@ ports. Pumping connects via KF-25 ports on the vessel body.
 | 1 | Equipment rack | Steel | Floor |
 | 2 | Compressor (CNA-11RC) | — | 120V wall outlet |
 | 3 | Flex lines + cold head cable | SS/Cu | Compressor to cold head |
-| 4 | Vacuum vessel body | 304L SS | 8" CF top + bottom |
-| 5 | Top plate | 304L SS | 8" CF, center bore for cold head |
-| 6 | Bottom plate | 304L SS | 8" CF blank |
+| 4 | Vacuum vessel body | 6061-T6 Al | 8" CF top + bottom |
+| 5 | Top plate | 6061-T6 Al | 8" CF, center bore for cold head |
+| 6 | Bottom plate | 6061-T6 Al | 8" CF blank |
 | 7 | Viton O-ring (top plate seal) | Viton | Reusable sample access joint |
 | 8 | CF copper gaskets | OFHC Cu | Permanent joints |
 | 9 | KF side ports | SS | Welded on vessel body |
