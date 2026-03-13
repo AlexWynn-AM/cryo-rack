@@ -154,6 +154,24 @@ The cryostat is top-loading: the cold head hangs from the top plate with the
 cold end pointing down. Feedthroughs are on the top plate or welded side
 ports. Pumping connects via KF-25 ports on the vessel body.
 
+### Vacuum vessel material
+
+Two options for the 8" CF vacuum vessel:
+
+| Option | Material | Magnetic (μr) | Procurement | Notes |
+|--------|----------|---------------|-------------|-------|
+| **Aluminum (preferred)** | 6061-T6 Al tube + Atlas bimetal flanges | ~1.00 | Semi-COTS | Al body + SS knife edge; local weld required |
+| **Stainless (fallback)** | 304L SS CF nipple | ~1.02–1.10 | COTS (Lesker) | Works with adequate FINEMET shielding |
+
+**Aluminum path:** Purchase Atlas UHV 8" bimetal Al/SS CF weld-neck flanges
+and 8" OD 6061-T6 aluminum tube. TIG weld at local shop. Non-magnetic
+vessel eliminates trapped flux concerns.
+
+**Stainless path:** Purchase Lesker 8" CF full nipple (304L SS). Faster
+procurement but slightly magnetic. The FINEMET shielding (μr ~30,000)
+dominates attenuation, so SS vessel permeability is a small contribution
+to residual field — acceptable for initial deployment.
+
 ### Cross-section
 
 ```
@@ -226,9 +244,9 @@ ports. Pumping connects via KF-25 ports on the vessel body.
 | 1 | Equipment rack | Steel | Floor |
 | 2 | Compressor (CNA-11RC) | — | 120V wall outlet |
 | 3 | Flex lines + cold head cable | SS/Cu | Compressor to cold head |
-| 4 | Vacuum vessel body | 6061-T6 Al | 8" CF top + bottom |
-| 5 | Top plate | 6061-T6 Al | 8" CF, center bore for cold head |
-| 6 | Bottom plate | 6061-T6 Al | 8" CF blank |
+| 4 | Vacuum vessel body | 6061-T6 Al (or 304L SS) | 8" CF top + bottom (see §2, vessel material) |
+| 5 | Top plate | 6061-T6 Al (or 304L SS) | 8" CF, center bore for cold head |
+| 6 | Bottom plate | 6061-T6 Al (or 304L SS) | 8" CF blank |
 | 7 | Viton O-ring (top plate seal) | Viton | Reusable sample access joint |
 | 8 | CF copper gaskets | OFHC Cu | Permanent joints |
 | 9 | KF side ports | SS | Welded on vessel body |
