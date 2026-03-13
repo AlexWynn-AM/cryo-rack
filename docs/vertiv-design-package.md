@@ -63,15 +63,17 @@ flowchart TD
     relief["Pressure Relief Valve"]
 
     subgraph cryostat["Cryostat Assembly"]
+        subgraph topPlate["Top Plate (300K)"]
+            feedthroughs["Feedthroughs\nD-sub x2, SMA x4"]
+            coldHeadMount["Cold Head\nMount"]
+        end
         vessel["SS Vacuum Vessel\n6-inch CF Nipple"]
-        feedthroughs["Feedthroughs\nD-sub x2, SMA x4"]
         coldHead["RDK-101D\nGM Cold Head"]
         radShield["40K Radiation Shield\nAl + FINEMET + MLI"]
         sampleStage["4K Sample Stage\nCu + Pb Foil"]
         aqfpDie["AQFP Die"]
 
-        vessel ~~~ feedthroughs
-        feedthroughs ~~~ coldHead
+        coldHeadMount --> coldHead
         coldHead -->|"1st stage + Cu straps"| radShield
         radShield -->|"2nd stage + Cu straps"| sampleStage
         sampleStage --> aqfpDie
@@ -83,10 +85,10 @@ flowchart TD
     isoXfmr --> tempController
     isoXfmr --> testEquip
 
-    compressor -->|"He flex lines (3 m)"| coldHead
-    pumpStation -->|"KF-25 bellows hose"| vessel
-    tempController -->|"4-wire sensor cables"| feedthroughs
-    testEquip -->|"BNC / SMA cables"| feedthroughs
+    compressor -->|"He flex lines"| coldHeadMount
+    pumpStation -->|"KF-25 bellows"| vessel
+    tempController -->|"4-wire sensor"| feedthroughs
+    testEquip -->|"BNC / SMA"| feedthroughs
 
     gauge --> vessel
     relief --> vessel
