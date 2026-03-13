@@ -164,14 +164,16 @@ ports. Pumping connects via KF-25 ports on the vessel body.
              │ flex lines (He supply + return)
              │ cold head cable (motor drive)
              │
+       ┌─────┴─────┐
+       │ COLD HEAD │                      Motor housing sits on top plate
+       │  (motor)  │   FT  FT  FT         FT = feedthrough ports (D-sub, SMA)
+       │   300K    │   ○   ○   ○          Pirani gauge, pressure relief
+       └─────┬─────┘
   ═══════════╪══════════════════════════  ← TOP PLATE (300K)
-  ║    ┌─────┴─────┐   FT  FT  FT  ║     8" CF multiport cluster flange
-  ║    │ COLD HEAD │   ○   ○   ○   ║     FT = feedthrough ports (D-sub, SMA)
-  ║    │  (motor)  │               ║     Center bore: CF seal to cold head
-  ║    │           │               ║     Viton O-ring seal to vessel body
-  ║    │           │               ║     (reusable for sample access cycling)
-  ║    ├───────────┤ ← 1st stage   ║
-  ║    │  (40 K)   │    flange     ║
+  ║          │             ○   ○   ║     8" CF multiport cluster flange
+  ║    ┌─────┴─────┐               ║     Center bore: CF seal to cold head
+  ║    │ 1st stage │               ║     Viton O-ring seal to vessel body
+  ║    │  (40 K)   │               ║     (reusable for sample access cycling)
   ║  ┌─┤           ├─┐             ║
   ║  │ └─────┬─────┘ │             ║
   ║  │  strap│  strap│             ║  ← OFHC Cu thermal straps (x2)
@@ -201,9 +203,8 @@ ports. Pumping connects via KF-25 ports on the vessel body.
   ║  │  └─────────┘  │  :···:      ║
   ║  └───────────────┘             ║
   ║                                ║  ← VACUUM VESSEL BODY (300K)
-  ║  ○ KF-25 (pump)               ║     SS CF nipple, 6" OD tube
-  ║  ○ KF-25 (gauge)              ║     KF stubs welded on sides
-  ║  ○ KF-25 (relief valve)       ║
+  ║  ○ KF-25 (pump)               ║     6061-T6 Al, 6" OD tube
+  ║                                ║     KF ports on top plate
   ║                                ║
   ═════════════════════════════════════  ← BOTTOM PLATE (300K)
                                          Blank 8" CF flange
