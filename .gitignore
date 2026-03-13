@@ -1,0 +1,26 @@
+# Vendor confidential materials (quotes with NDA terms, etc.)
+bom/vendors/*.pdf
+bom/vendors/*.xlsx
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Node (mermaid-cli)
+node_modules/
+package-lock.json
+package.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated exports
+exports/
+*.xlsx
+!scripts/*.xlsx
+
+# Build artifacts (regenerate with: .venv/bin/python scripts/build_pdf.py)
+docs/cryo-rack-design-package.pdf
+docs/cryo-rack-design-package.html

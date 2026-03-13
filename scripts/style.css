@@ -1,0 +1,209 @@
+/* PDF stylesheet for Cryo Rack Design Package */
+
+@page {
+    size: letter;
+    margin: 2cm 2.5cm;
+
+    @bottom-center {
+        content: "AQFP Cryo Rack — Design Package  •  Rev 0.6";
+        font-size: 8pt;
+        color: #888;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    @bottom-right {
+        content: counter(page);
+        font-size: 8pt;
+        color: #888;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+}
+
+@page :first {
+    @bottom-center { content: none; }
+    @bottom-right { content: none; }
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 10pt;
+    line-height: 1.5;
+    color: #222;
+    max-width: none;
+}
+
+h1 {
+    font-size: 20pt;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    padding-bottom: 0.3em;
+    border-bottom: 2px solid #1a1a2e;
+    page-break-before: always;
+}
+
+h1:first-of-type {
+    page-break-before: avoid;
+}
+
+h2 {
+    font-size: 14pt;
+    font-weight: 600;
+    color: #16213e;
+    margin-top: 1.5em;
+    margin-bottom: 0.4em;
+    page-break-after: avoid;
+}
+
+h3 {
+    font-size: 11pt;
+    font-weight: 600;
+    color: #0f3460;
+    margin-top: 1.2em;
+    margin-bottom: 0.3em;
+    page-break-after: avoid;
+}
+
+h4 {
+    font-size: 10pt;
+    font-weight: 600;
+    color: #333;
+    margin-top: 1em;
+    margin-bottom: 0.2em;
+    page-break-after: avoid;
+}
+
+p {
+    margin-bottom: 0.6em;
+    orphans: 3;
+    widows: 3;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0.8em 0;
+    font-size: 9pt;
+    page-break-inside: avoid;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 5px 8px;
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    background-color: #1a1a2e;
+    color: white;
+    font-weight: 600;
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+tr:last-child td {
+    font-weight: normal;
+}
+
+/* Bold total/summary rows */
+tr:last-child td strong {
+    font-weight: 700;
+}
+
+code {
+    font-family: "SF Mono", "Menlo", "Monaco", "Courier New", monospace;
+    font-size: 8.5pt;
+    background-color: #f4f4f4;
+    padding: 1px 4px;
+    border-radius: 3px;
+}
+
+pre {
+    font-family: "SF Mono", "Menlo", "Monaco", "Courier New", monospace;
+    font-size: 7.5pt;
+    line-height: 1.35;
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 12px 14px;
+    overflow-x: auto;
+    page-break-inside: avoid;
+    white-space: pre;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+    font-size: inherit;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 2em 0;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+    margin: 1em auto;
+}
+
+ul, ol {
+    margin-bottom: 0.6em;
+    padding-left: 1.5em;
+}
+
+li {
+    margin-bottom: 0.2em;
+}
+
+/* Checklist styling */
+li input[type="checkbox"] {
+    margin-right: 0.4em;
+}
+
+strong {
+    font-weight: 600;
+}
+
+blockquote {
+    border-left: 3px solid #1a1a2e;
+    margin: 1em 0;
+    padding: 0.5em 1em;
+    background-color: #f8f9fa;
+    font-style: italic;
+}
+
+/* Title block */
+.title-block {
+    text-align: center;
+    padding: 4em 0 2em 0;
+    page-break-after: always;
+}
+
+.title-block h1 {
+    font-size: 28pt;
+    border-bottom: none;
+    page-break-before: avoid;
+    margin-bottom: 0.3em;
+}
+
+.title-block .subtitle {
+    font-size: 14pt;
+    color: #555;
+    margin-bottom: 0.5em;
+}
+
+.title-block .meta {
+    font-size: 10pt;
+    color: #777;
+    margin-top: 2em;
+}

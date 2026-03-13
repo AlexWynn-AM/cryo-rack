@@ -1,0 +1,21 @@
+# Vertiv Site-Specific BOM Overrides
+# Inherits from bom.yaml. Only list items that differ or are unique to the Vertiv deployment.
+
+site: Vertiv
+base: bom.yaml
+revision: "0.1"
+date: "2026-03-10"
+
+notes: >
+  Vertiv demo system. Vertiv may supply rack infrastructure, power distribution,
+  and cooling water. Confirm what they provide vs what we bring.
+
+overrides: []
+  # Example:
+  # - assembly: rack-utilities
+  #   part: Equipment Rack (19" Standard)
+  #   status: provided-by-vertiv
+  #   notes: "Vertiv supplying rack and PDU from their demo floor."
+
+additions: []
+  # Items unique to Vertiv deployment

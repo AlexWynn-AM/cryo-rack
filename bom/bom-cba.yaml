@@ -1,0 +1,22 @@
+# CBA Site-Specific BOM Overrides
+# Inherits from bom.yaml. Only list items that differ or are unique to the CBA deployment.
+
+site: CBA
+base: bom.yaml
+revision: "0.1"
+date: "2026-03-10"
+
+notes: >
+  CBA deployment builds on existing lab infrastructure. Some instrumentation
+  may already be available. Verify before ordering duplicates.
+
+overrides: []
+  # Example:
+  # - assembly: cryocooler-system
+  #   part: GM Cryocooler Cold Head
+  #   pn: RDK-408D2
+  #   vendor: Sumitomo
+  #   notes: "Using unit already sourced for garage lab build."
+
+additions: []
+  # Items unique to CBA deployment
