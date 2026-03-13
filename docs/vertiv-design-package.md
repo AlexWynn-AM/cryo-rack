@@ -56,8 +56,9 @@ flowchart TD
     power["120V / 15A\nWall Outlet"]
     compressor["CNA-11RC\nHe Compressor\n1.2 kW, air-cooled"]
     pumpStation["HiCube 80 Eco\nTurbo Station"]
+    isoXfmr["Isolation Transformer\nTripp Lite IS500HG"]
     tempController["Cryocon 22C\nTemp Controller"]
-    testEquip["External Test Equipment\nYokogawa GS200 + Keithley 2182A"]
+    testEquip["Test & Computing\nInterfaces"]
     gauge["Pirani Gauge"]
     relief["Pressure Relief Valve"]
 
@@ -72,13 +73,15 @@ flowchart TD
         vessel ~~~ feedthroughs
         feedthroughs ~~~ coldHead
         coldHead -->|"1st stage + Cu straps"| radShield
-        coldHead -->|"2nd stage + Cu straps"| sampleStage
+        radShield -->|"2nd stage + Cu straps"| sampleStage
         sampleStage --> aqfpDie
     end
 
     power --> compressor
     power --> pumpStation
-    power --> tempController
+    power --> isoXfmr
+    isoXfmr --> tempController
+    isoXfmr --> testEquip
 
     compressor -->|"He flex lines (3 m)"| coldHead
     pumpStation -->|"KF-25 bellows hose"| vessel
