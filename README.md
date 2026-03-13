@@ -8,10 +8,11 @@ Design and procure a cryogenic demonstration rack using off-the-shelf components
 
 ## Deployments
 
-| Site    | Status  | Notes                          |
-|---------|---------|--------------------------------|
-| Vertiv  | Active  | Demo system, primary target    |
-| CBA     | Planned | Independent test infrastructure|
+| Site              | Status  | Notes                          |
+|-------------------|---------|--------------------------------|
+| Vertiv            | Planned | Demo system, primary target    |
+| CBA               | Planned | Independent test infrastructure|
+| Adiabatic Machines| Planned |                                |
 
 ## Repository Structure
 
