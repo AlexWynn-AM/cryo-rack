@@ -136,10 +136,12 @@ Isolation is maintained by:
 | 4 K (cold finger) | Polycrystalline alumina disk, 25–30 mm, indium foil both faces | Breaks galvanic path between cryocooler and circuit ground |
 | 300 K (feedthroughs) | Ceramic-to-metal hermetic seals | Pins isolated from flange body by design |
 | 300 K (power entry) | Tripp Lite IS500HG isolation transformer (500 W, Faraday-shielded) | Isolates readout ground from building mains |
+| 300 K (enclosure) | Plastic isolation jacket around cryostat | Prevents accidental contact between cables and vessel |
 
-**Critical assembly discipline:** No readout cable shield, coax braid,
-ground lug, or debug probe ground may touch the cryostat body, vacuum
-jacket, or rack chassis during measurement.
+A plastic enclosure (ABS or acrylic) surrounds the cryostat body,
+physically preventing accidental ground contact during assembly and
+measurement. All cable routing passes through the enclosure via
+insulated grommets at the top plate interface.
 
 ---
 
