@@ -1,0 +1,738 @@
+# Cryo Rack Master BOM
+# Machine-readable bill of materials for cryogenic demonstration rack.
+# All costs in USD. Lead times in weeks. Status: planned | quoting | quoted | ordered | received.
+# Costs are rough estimates for budgeting; get actual quotes before ordering.
+
+project: cryo-rack
+revision: "0.7"
+date: "2026-03-10"
+target_build_date: "2026-04-10"
+
+assemblies:
+
+  # ============================================================
+  # CRYOCOOLER SYSTEM  (see ADR-002)
+  # ============================================================
+  - name: cryocooler-system
+    description: >
+      Two-stage cryocooler, compressor, and flex lines.
+      Option A (SHI RDK-101D) is the default selection. Others at qty 0 for reference.
+    items:
+      - part: "Option A: SHI RDK-101D Complete System"
+        pn: RDK-101D + CNA-11RC
+        vendor: Sumitomo / SHI Cryogenics of America
+        url: https://shicryogenics.com/product/rdk-101dl-4k-cryocooler-series/
+        qty: 1
+        unit_cost_usd: 27230
+        lead_time_weeks: 12
+        stage: "4K/40K"
+        status: quoted
+        notes: >
+          QUOTED: SHI Quote 5618, dated 11/7/2025 (expired 12/7/2025 — re-quote).
+          0.1 W @ 4.2 K. Includes: RDK-101D cold head ($12,500), CNA-11RC
+          compressor ($13,000), 5M cable ($280), 3M flex lines supply+return
+          ($940), 6M cold head cable ($290), tool kit ($220). Total $27,230.
+          12 weeks ARO. FOB Allentown PA. 50%/50% payment terms.
+          Contact: Melissa Dale, melissa.dale@shi-g.com
+          ACTION: When re-quoting, specify ConFlat (CF) flange option for the
+          cold head (listed on SHI custom options page). This gives a standard
+          vacuum interface compatible with stock CF hardware — no adapter plate
+          needed. Also confirm if RDC-02K shares the same CF flange option.
+
+      - part: "Option B: Bama BMC401 Complete System"
+        pn: BMC401 + HC104F
+        vendor: Bama Superconductor Technology (Suzhou)
+        url: https://www.bamasupercon.com
+        qty: 0
+        unit_cost_usd: 12500
+        lead_time_weeks: 4
+        stage: "4K/40K"
+        status: quoted
+        notes: >
+          QUOTED: RMB 90,000 EXW for package; USD breakdown $7,000 (BMC401)
+          + $6,000 (HC104F) = $13,000 USD. Delivery ~1 month. Specs from
+          catalog: 0.16 W @ 4.2 K, 3 W @ 45 K, <2.3 K min temp, <150 min
+          cooldown, 8 kg, 10,000 hr maintenance.
+          120V UPDATE (Mar 2026): HC104F compressor is 220V but only 1.5 kW
+          (10A Chinese outlet). With a 120V→220V step-up transformer ($30-50),
+          draws ~12.5A @ 120V. Tight on a 15A breaker (NEC 80% = 12A
+          continuous) but fine on a 20A circuit. Much better than the 3 kW
+          originally estimated. 60Hz confirmed OK — Bama can set before ship.
+          BMC401 NOT compatible with SHI CNA-11 compressor (different motor
+          drive) — hybrid option ruled out.
+          STEP model received (bom/quotes/BMC401_cryocooler.stp). Key dims
+          from STEP: motor housing ~Ø130mm, 1st stage ~Ø77-80mm, 2nd stage
+          ~Ø40mm. Mounting bolt circle ~Ø48.6mm with M4/M5 holes.
+          Ø130mm OD does NOT match standard CF sizes (DN63=Ø114, DN100=Ø152)
+          — adapter plate needed for CF top plate interface.
+          Bama also offered to fabricate a vacuum chamber if we send drawings.
+          Contact: Jason Lin, linjj@bama-supercon.com, +86 180 1307 5073.
+
+      - part: "Option C: Cryomech PT205 Prototype System"
+        pn: PT205 + CP103A
+        vendor: Bluefors Cryocooler Technologies (Cryomech)
+        url: https://bluefors.com/products/cryocoolers/
+        qty: 0
+        unit_cost_usd: 42325
+        lead_time_weeks: 40
+        stage: "4K/40K"
+        status: quoted
+        notes: >
+          FOR REFERENCE — pulse tube, low vibration, but long lead and high cost.
+          Quote 0010037 / Ticket 72680, dated 10/24/2025 (expired ~1/22/2026).
+          PROTOTYPE PT205: 100-300 mW @ 5-6 K. Includes: PT205 coldhead +
+          CP103A compressor ($39,220, air-cooled, 19" rack mount, ~1.5 kW).
+          Quote specified 208/220V 1-ph 60Hz, but at 1.5 kW a 120V version
+          would draw only ~12.5A — within 15A breaker. Cryomech likely offers
+          120V option; confirm when re-quoting.
+          SS flex lines x2 ($1,760), motor cord ($335), tool kit ($235),
+          P&H ($775). Total $42,325 FCA Syracuse NY. 36-40 weeks ARO. Net 30.
+          Contact: cryomech.sales@bluefors.com, +1 315 455 2555.
+
+      - part: "Reference: SHI RDC-02K System (2K option)"
+        pn: RDC-02K + CNA-11RC
+        vendor: Sumitomo / SHI Cryogenics of America
+        url: https://shicryogenics.com/product/rdc-02k-2k-cryocooler-series/
+        qty: 0
+        unit_cost_usd: 37155
+        lead_time_weeks: 12
+        stage: "4K/40K"
+        status: quoted
+        notes: >
+          FOR REFERENCE — not ordering unless 2K capability needed.
+          SHI Quote 5617, dated 11/7/2025. 0.2 W @ 4.2 K, guaranteed <2K.
+          Includes: RDC-02K cold head ($18,559), CNA-11RC compressor ($13,000),
+          drive unit DU-01 ($2,000), cables + flex lines ($1,730), tariff ($1,866).
+          Total $37,155. 12 weeks ARO.
+
+      - part: "Reference: attocube IGLU Compressor (rack-mount alternative)"
+        pn: IGLU
+        vendor: attocube systems AG
+        url: https://www.attocube.com/en/products/cryostats/compact-mobile-cryogenics/iglu-compressor
+        qty: 0
+        unit_cost_usd: 40000
+        lead_time_weeks: null
+        stage: "300K"
+        status: planned
+        notes: >
+          FOR REFERENCE — compressor only, no cold head. ~$40k (estimated).
+          19" rack-mountable helium compressor, ~1 kW input, air-cooled,
+          orientation-free, oil-free helium compression. Confirmed compatible
+          with RDK-101D and other GM/pulse tube cold heads.
+          230V native; 110V option with external step-up transformer (small,
+          ~1 kW transformer is cheap). At ~1 kW = 8.3A @ 120V, within 15A.
+          Interesting for modularity (decouple compressor from cold head vendor)
+          and rack integration, but ~3x the cost of the CNA-11RC ($13k) which
+          already does 120V natively. Made in Germany.
+          Only makes sense if: (a) compressor-cold head decoupling is valued,
+          (b) rack density matters, or (c) future cold head swap is planned.
+
+  # ============================================================
+  # CRYOSTAT — MODULAR BUILD FROM STANDARD PARTS
+  # ============================================================
+  # Design philosophy: all vacuum hardware is standard CF/KF catalog items
+  # from multi-source vendors (Lesker, MDC, Nor-Cal, Ideal Vacuum).
+  # Only the radiation shield and sample stage are custom machined
+  # (simple aluminum/copper parts any machine shop can make).
+  # No single-vendor lock-in. Every piece can be re-sourced.
+  #
+  # Architecture: top-loading, cold head hangs from top plate.
+  # Cold end points down. Feedthroughs on top plate or side ports.
+  # Radiation shield (Al) bolted to 1st stage. Sample stage (Cu)
+  # bolted to 2nd stage. Pumping via KF-25 port on body or base.
+  # ============================================================
+  - name: cryostat-vessel
+    description: >
+      Modular cryostat built from standard CF/KF vacuum components.
+      Top-loading design: RDK-101D cold head mounts through top plate,
+      feedthroughs on top plate or side stubs, pumping on base/side.
+      Vacuum vessel is 300K stainless (fine — only the cold internals
+      need aluminum/copper). Target sample space >= Ø80 x 120 mm.
+    items:
+      - part: "Vacuum Vessel Body (CF Nipple or 6-Way Cross)"
+        pn: null
+        vendor: Kurt Lesker / MDC / Nor-Cal
+        url: https://www.lesker.com/newweb/flanges/fittings_cf_nipples.cfm
+        qty: 1
+        unit_cost_usd: 1500
+        lead_time_weeks: 1
+        stage: "300K"
+        status: planned
+        notes: >
+          Stock stainless CF chamber. Two approaches:
+          (A) CF nipple (6" OD tube, 8" CF flanges top/bottom) with KF stubs
+          welded on for pumping + gauge — simple, cheap (~$600-1000). Use
+          Lesker Nipple Builder for custom lengths. Have a shop weld 2-3
+          KF-25/KF-40 stubs onto the tube wall for side access.
+          (B) 6-way cross, 8" CF (Nor-Cal 6C-600) — 6 ports, no welding
+          needed, but heavier and ~$3800. More ports than we likely need.
+          Recommendation: option (A) — stock CF nipple + welded KF stubs.
+          Internal clearance: 6" OD tube = ~140 mm ID, sufficient for
+          Ø80-100mm radiation shield + FINEMET wrap.
+          Stainless is fine for the 300K vacuum jacket; thermal conductivity
+          only matters for the cold internals (shield, stage).
+
+      - part: "Top Plate (Multiport Cluster Flange or Bored Blank)"
+        pn: null
+        vendor: Kurt Lesker / MDC
+        url: https://www.lesker.com/newweb/flanges/multiport-cluster-flanges.cfm
+        qty: 1
+        unit_cost_usd: 800
+        lead_time_weeks: 2
+        stage: "300K"
+        status: planned
+        notes: >
+          8" CF (DN160) flange with center bore for RDK-101D cold head and
+          surrounding ports for feedthroughs. Options:
+          (A) Lesker multiport cluster flange — stock item, center bore +
+          4-6 smaller CF ports (CF-16 or CF-40) around perimeter. ~$800-1200.
+          (B) Blank 8" CF flange (Lesker F0800X000N, ~$200) machined by a
+          shop for cold head bolt pattern + feedthrough ports. Cheaper but
+          needs machining.
+          RDK-101D bolt pattern from SHI outline drawing (in bom/quotes/).
+          Feedthrough ports: 2x CF-16 for D-sub, 2x CF-16 for SMA coax,
+          1x KF-25 for pumping/gauge if not on side.
+          KEY: If RDK-101D is ordered with CF flange option, center bore is
+          a standard CF seal — no custom machining needed. If switching
+          cryocoolers later, this top plate is the ONLY cryocooler-specific
+          part. New blank CF flange + machining ~$400 total to swap.
+          NOTE: BMC401 has a Ø130mm motor housing that doesn't match any
+          standard CF size — would need a custom adapter plate machined
+          into the top plate. RDK-101D CF option avoids this.
+
+      - part: "Radiation Shield (40K) — Custom Machined Aluminum"
+        pn: null
+        vendor: "Local machine shop / Protolabs / Xometry"
+        qty: 1
+        unit_cost_usd: 800
+        lead_time_weeks: 2
+        stage: "40K"
+        status: planned
+        notes: >
+          6061-T6 aluminum cylinder + end caps, thermally anchored to
+          RDK-101D 1st stage via OFHC copper thermal strap. Simple turned
+          part — any CNC shop can make this. Target dimensions: ~Ø100 mm OD
+          × 150-200 mm tall (sized to fit inside vacuum vessel with clearance
+          for FINEMET wrap on outside). Bottom cap has clearance hole for
+          2nd stage penetration. Top cap has clearance for cold head body.
+          Gold-plated or polished interior for low emissivity (optional).
+          Design once cold head outline drawing dimensions are confirmed.
+          Protolabs/Xometry for fast-turn; local shop for best price.
+
+      - part: "Sample Stage (4K) — Custom Machined Copper"
+        pn: null
+        vendor: "Local machine shop"
+        qty: 1
+        unit_cost_usd: 400
+        lead_time_weeks: 2
+        stage: "4K"
+        status: planned
+        notes: >
+          OFHC copper plate/block, gold-plated. Provides thermal mass and
+          mounting surface for DUT PCB carrier. Connects to 2nd stage cold
+          finger THROUGH the alumina isolation disk (see below). Tapped
+          holes for PCB standoffs and Pb foil shield bracket. Simple part.
+          Target: ~Ø50 mm × 20 mm thick, with M3/M4 tapped holes.
+
+      - part: "Alumina Electrical Isolation Disk (4K)"
+        pn: null
+        vendor: CoorsTek / McMaster-Carr
+        url: https://www.mcmaster.com
+        qty: 1
+        unit_cost_usd: 30
+        lead_time_weeks: 1
+        stage: "4K"
+        status: planned
+        notes: >
+          Polycrystalline alumina (Al₂O₃) disk, 25–30 mm diameter, 1–2 mm
+          thick, polished both faces. Inserted between the 2nd-stage cold
+          finger and the copper backplane/sample stage. Breaks the galvanic
+          path between the cryocooler structure (earth-grounded through
+          compressor) and the AQFP circuit ground (isolated measurement
+          domain). Thermal conductivity 10–30 W/m·K at 4 K — adequate
+          since indium foil interface resistance dominates. Use 0.1 mm
+          indium foil on both faces with high clamping force. Expected
+          temperature rise: fraction of a kelvin. Off-the-shelf from
+          CoorsTek, McMaster-Carr, or ceramic suppliers. See ADR-004 and
+          docs/ground_isolation_memo.docx for full rationale.
+
+  # ============================================================
+  # VACUUM PUMPING, GAUGES, FEEDTHROUGHS
+  # ============================================================
+  - name: vacuum-plumbing
+    description: >
+      Pumping, gauges, and feedthroughs. All standard catalog items
+      from multiple vendors — no single-source risk.
+    items:
+      - part: "Vacuum Pumping: Turbo Station (Pfeiffer HiCube 80 Eco)"
+        pn: HiCube 80 Eco
+        vendor: Pfeiffer Vacuum
+        url: https://www.pfeiffer-vacuum.com/global/en/products/pumping-stations/turbo-pumping-stations
+        order_url: https://www.idealvac.com/en-us/HiCube-80-ECO/pl/5-44-229-1658
+        qty: 1
+        unit_cost_usd: 7900
+        lead_time_weeks: 1
+        stage: "300K"
+        status: planned
+        notes: >
+          Integrated turbo + diaphragm backing pump + controller + gauge
+          in one box. Ultimate: <1e-8 Torr. HiPace 80 turbo (67 L/s) +
+          MVP 015 diaphragm backing pump. 30 lb, ~50 dB, plug-and-play.
+          Reaches 1e-5 Torr in ~20-30 min — faster cooldown due to
+          less residual gas conduction. Good for fast cycling (2x/day).
+          Smallest/cheapest integrated turbo station from a major vendor.
+          Diaphragm backing pump is small (15 L/min) — initial roughing
+          from atmosphere is slower than a dedicated scroll pump.
+          Street price ~$8-9k from Ideal Vacuum or High Vac Depot.
+
+      - part: "Vacuum Pumping Alt: Scroll Only (Edwards nXDS6i)"
+        pn: nXDS6i
+        vendor: Edwards Vacuum
+        url: https://www.edwardsvacuum.com/en/our-products/dry-scroll-pumps/nxds-dry-scroll-pumps
+        order_url: https://www.idealvac.com/en-us/vacuum-products/pl/1362-8-117-245-960
+        qty: 0
+        unit_cost_usd: 5900
+        lead_time_weeks: 1
+        stage: "300K"
+        status: planned
+        notes: >
+          Budget alternative — scroll pump only, no turbo. Ultimate:
+          0.015 Torr. 100 L/min, 260 W, 120/240 V auto-sensing, 52 dB,
+          58 lb. Tip seal life 12,000-16,000 hr. Adequate for infrequent
+          cycling (1x/day). Cooldown ~30-60 min longer vs turbo due to
+          higher starting pressure. Saves ~$2k vs HiCube.
+
+      - part: Vacuum Gauge (Convection Pirani)
+        pn: CVM211
+        vendor: InstruTech
+        url: https://www.instrutechinc.com/products/convection-and-pirani-capacitance-vacuum-gauges/cvm211-stinger-convection
+        order_url: https://highvacdepot.com/product/instrutech-stinger-convection-gauge-series-211/
+        qty: 1
+        unit_cost_usd: 400
+        lead_time_weeks: 1
+        stage: "300K"
+        status: planned
+        notes: >
+          Integrated gauge + display, atm to 1e-4 Torr. Available with KF25 fitting.
+          Sufficient for pumpdown monitoring. Cryopumping maintains UHV at 4 K;
+          no cold cathode needed for operation.
+
+      - part: Electrical Feedthroughs (DC, Multi-pin)
+        pn: null
+        vendor: MDC Vacuum / Kurt Lesker
+        url: https://www.lesker.com/newweb/feedthroughs/feedthroughs_tab_dsub.cfm
+        qty: 2
+        unit_cost_usd: 500
+        lead_time_weeks: 2
+        stage: "300K"
+        status: planned
+        notes: >
+          D-sub 25-pin hermetic feedthroughs on CF flanges. 2 units gives 50 pins —
+          sufficient for DC bias (16 wires) + temp sensors (8 wires) + spares.
+          Ceramic-to-metal seals are inherently isolated from the flange body,
+          preserving the ground isolation architecture — no coax shield or
+          cable braid should connect to the flange housing. Stock items from
+          MDC or Lesker.
+
+      - part: RF/Coax Feedthroughs (SMA)
+        pn: null
+        vendor: MDC Vacuum / Kurt Lesker
+        url: https://www.lesker.com/newweb/feedthroughs/feedthroughs_tab_coax.cfm
+        qty: 0
+        unit_cost_usd: 200
+        lead_time_weeks: 2
+        stage: "300K"
+        status: planned
+        notes: >
+          DEFERRED — define count based on DUT requirements. ~$200 each,
+          SMA hermetic on CF flanges. Reserve blank CF ports on top plate
+          for future installation.
+
+      - part: Fiber Optic Feedthrough
+        pn: null
+        vendor: null
+        qty: 0
+        unit_cost_usd: 0
+        lead_time_weeks: null
+        stage: "300K"
+        status: planned
+        notes: "Deferred to Phase 2. Design cryostat with blank flange for future fiber port."
+
+  # ============================================================
+  # MAGNETIC SHIELDING
+  # ============================================================
+  - name: magnetic-shielding
+    description: >
+      Ambient field attenuation to < 5 uT at DUT (target < 100 nT with Pb shield).
+      FINEMET nanocrystalline ribbon at 40 K, superconducting lead at 4 K.
+    items:
+      - part: FINEMET Nanocrystalline Ribbon
+        pn: FT-3M
+        vendor: Proterial (formerly Hitachi Metals)
+        url: https://www.proterial.com/e/products/soft_magnetism/finemet.html
+        order_url: https://www.mouser.com/new/proterial/hitachi-metals-finemet-ft-3k50t-f/
+        qty: 1
+        unit_cost_usd: 800
+        lead_time_weeks: 2
+        stage: "40K"
+        status: planned
+        notes: >
+          High-permeability nanocrystalline ribbon, wrapped as a cylinder on the
+          40 K radiation shield. Better shielding factor per layer than mu-metal,
+          no degaussing needed after forming. 2-3 wraps should give > 40 dB
+          attenuation. Confirm dimensions once cryostat bore is known.
+          Order from Mouser (Proterial authorized distributor) or Digikey for
+          quick stock. Mouser Proterial catalog: https://www.mouser.com/manufacturer/proterial/
+
+      - part: Lead Foil (Superconducting Shield)
+        pn: null
+        vendor: McMaster-Carr / Alfa Aesar
+        url: https://www.mcmaster.com
+        qty: 1
+        unit_cost_usd: 30
+        lead_time_weeks: 1
+        stage: "4K"
+        status: planned
+        notes: >
+          Pb foil, 0.1–0.25 mm thick, 99.9% purity, ~150 x 150 mm.
+          Wrapped around DUT stage at 4 K. Tc = 7.2 K — standard purity
+          Pb goes superconducting the same as 5N. McMaster or any metal
+          supplier. 5N purity only needed for ultra-sensitive physics.
+
+  # ============================================================
+  # THERMAL MANAGEMENT & WIRING
+  # ============================================================
+  - name: thermal-wiring
+    description: >
+      Heat sinking, thermal intercepts, and signal wiring from 300 K to 4 K.
+    items:
+      - part: Copper Braid / Thermal Straps (40 K stage)
+        pn: null
+        vendor: McMaster-Carr
+        url: https://www.mcmaster.com
+        qty: 2
+        unit_cost_usd: 50
+        lead_time_weeks: 1
+        stage: "40K"
+        status: planned
+        notes: >
+          DIY from OFHC copper braid, bolt-hole ends. Connects 1st stage
+          cold head to 40 K radiation shield. With >90% thermal margin,
+          precision-characterized straps (TAI, ~$300 ea) are unnecessary.
+
+      - part: Copper Braid / Thermal Straps (4 K stage)
+        pn: null
+        vendor: McMaster-Carr
+        url: https://www.mcmaster.com
+        qty: 2
+        unit_cost_usd: 50
+        lead_time_weeks: 1
+        stage: "4K"
+        status: planned
+        notes: >
+          DIY from OFHC copper braid, bolt-hole ends. Connects 2nd stage
+          cold head to sample stage.
+
+      - part: Phosphor Bronze Wiring Loom (DC)
+        pn: null
+        vendor: California Fine Wire / MWS Wire
+        url: https://www.calfinewire.com
+        qty: 1
+        unit_cost_usd: 50
+        lead_time_weeks: 1
+        stage: "300K-4K"
+        status: planned
+        notes: >
+          36 AWG phosphor bronze wire, ~30 m. Twist into pairs/quads as
+          needed. 16 conductors from 300 K to 4 K with heat sinking at
+          40 K. Generic PhBr is the same alloy as Lake Shore branded wire.
+
+      - part: Coaxial Cables (RF/Clock)
+        pn: null
+        vendor: Pasternack / Mini-Circuits
+        url: https://www.pasternack.com
+        qty: 0
+        unit_cost_usd: 50
+        lead_time_weeks: 1
+        stage: "300K-4K"
+        status: planned
+        notes: >
+          DEFERRED — define count and type based on DUT requirements.
+          Standard UT-085-SS semi-rigid stainless coax, ~$50/m from
+          Pasternack or Mini-Circuits. Same SS construction as specialty
+          cryo coax at a fraction of the cost.
+
+      - part: PCB DUT Mount / Chip Carrier
+        pn: null
+        vendor: Custom / PCBWay
+        url: https://www.pcbway.com
+        qty: 2
+        unit_cost_usd: 200
+        lead_time_weeks: 2
+        stage: "4K"
+        status: planned
+        notes: >
+          Custom PCB on copper mount for wirebonded AQFP die. Gold-plated pads,
+          SMA edge-launch connectors for RF. Design once DUT pinout is known.
+          Order 2 for a spare. DUT-to-sample-stage adapter bracket can be
+          3D printed in PLA — easy to iterate as DUT pinout changes.
+
+      - part: MLI Blankets (Multi-Layer Insulation)
+        pn: null
+        vendor: "DIY or Dunmore / FrakoTerm"
+        url: https://hydrogen.wsu.edu/2020/06/16/how-to-make-cryogenic-multi-layer-insulation-mli-shields/
+        qty: 1
+        unit_cost_usd: 100
+        lead_time_weeks: 1
+        stage: "40K"
+        status: planned
+        notes: >
+          10-layer aluminized mylar + polyester netting for 40 K radiation
+          shield. CRITICAL for shields larger than Ø150mm — see thermal
+          budget appendix. For Ø200-300mm shield, need ~2 m² of each material.
+          DIY option (~$50-75): aluminized mylar photo-film (Amazon) +
+          100% polyester mosquito netting (Joann Fabric). WSU HYPER lab
+          tested this vs professional MLI and found comparable performance.
+          Professional option (~$300-500): double-aluminized PET from
+          Dunmore Aerospace (dunmore.com, Bristol PA) + Dacron netting.
+          Or pre-made custom blankets from FrakoTerm (frakoterm.com).
+          Installation: wear gloves, stagger seams, don't crumple.
+          Use mylar tape on seams, leave small gaps for pump-out.
+          Anchor with pipe cleaners or wire ties (not metal screws).
+
+  # ============================================================
+  # TEMPERATURE MONITORING (part of rack build)
+  # ============================================================
+  - name: temperature-monitoring
+    description: >
+      Sensors and controller integrated into the cryostat for temperature
+      readout and heater control. Part of the rack build.
+    items:
+      - part: Silicon Diode Temperature Sensor (4 K)
+        pn: DT-670-CU-1.4L
+        vendor: Lake Shore Cryotronics
+        url: https://www.lakeshore.com/products/categories/overview/temperature-products/cryogenic-temperature-sensors/dt-670-silicon-diodes
+        order_url: https://shop.lakeshore.com/temperature-products/temperature-sensors/silicon-diodes.html
+        qty: 2
+        unit_cost_usd: 50
+        lead_time_weeks: 1
+        stage: "4K"
+        status: planned
+        notes: >
+          DT-670 standard curve, copper canister. 1 on second stage, 1 on
+          DUT mount. ±0.5 K accuracy at 4.2 K with standard Curve 670;
+          adequate for confirming base temperature. Individually calibrated
+          units (~$100 each) get ±25 mK if needed later. Cernox not required
+          — only needed for sub-1 K work or precision thermometry.
+
+      - part: Silicon Diode Temperature Sensor (40 K)
+        pn: DT-670-CU-1.4L
+        vendor: Lake Shore Cryotronics
+        url: https://www.lakeshore.com/products/categories/overview/temperature-products/cryogenic-temperature-sensors/dt-670-silicon-diodes
+        order_url: https://shop.lakeshore.com/temperature-products/temperature-sensors/silicon-diodes.html
+        qty: 1
+        unit_cost_usd: 50
+        lead_time_weeks: 1
+        stage: "40K"
+        status: planned
+        notes: "Si diode for first-stage temperature monitoring. Same part as 4K sensors."
+
+      - part: Temperature Controller
+        pn: Model 22C
+        vendor: Cryocon (Cryogenic Control Systems)
+        url: https://us.cryocon.com/M22CProdFolder.php
+        qty: 1
+        unit_cost_usd: 2500
+        lead_time_weeks: 2
+        stage: "300K"
+        status: planned
+        notes: >
+          2-input, 2 control loops, 50 W heater output. Supports Si diode
+          and RTD inputs. Ethernet + USB. Well-established Lake Shore
+          alternative at roughly half the cost. Sufficient for 2 sensors
+          (4 K + 40 K) and optional heater control.
+          Alternatives: Lake Shore 335 (~$3.5-4k, 75 W heater) if Lake Shore
+          ecosystem preferred; Lake Shore 224 (~$2-2.5k) if monitor-only
+          (no heater) is acceptable. If CCS-100 cryostat is selected, a
+          controller may be included — confirm before ordering.
+
+  # ============================================================
+  # R&D / TEST EQUIPMENT (not part of rack build)
+  # ============================================================
+  - name: test-equipment
+    description: >
+      Electrical test instruments for AQFP characterization. NOT part of
+      the rack build — these are lab/bench equipment used alongside the rack.
+      See ADR-003 for selection rationale and Phase 2 options (OCTOPUX, QDAC-II).
+      Minimum need for rack commissioning: a current source and voltmeter to
+      evaluate power/ground cleanliness. The Yokogawa GS200 + Keithley 2182A
+      are the known standard for SC IV measurements.
+    items:
+      - part: DC Voltage/Current Source
+        pn: GS200
+        vendor: Yokogawa
+        url: https://tmi.yokogawa.com/us/solutions/products/generators-sources/programmable-dc-sources/gs200/
+        qty: 1
+        unit_cost_usd: 4000
+        lead_time_weeks: 2
+        stage: "300K"
+        status: planned
+        notes: >
+          Known standard for SC IV measurements. Low-noise DC source,
+          ±32 V / ±200 mA, 100 µVp-p noise. Also useful for evaluating
+          power/ground cleanliness of the rack wiring. No good COTS
+          alternative below this price point for SC work.
+
+      - part: Nanovoltmeter
+        pn: 2182A
+        vendor: Keithley / Tektronix
+        url: https://tek.com/en/products/keithley/low-level-sensitive-and-specialty-instruments/nanovoltmeter-model-2182a
+        qty: 1
+        unit_cost_usd: 6700
+        lead_time_weeks: 2
+        stage: "300K"
+        status: planned
+        notes: >
+          Known standard for SC voltage readout. 1 nV sensitivity,
+          15 nV p-p noise. Budget alternative: Keithley DMM6500 (~$1.9k,
+          100 nV sensitivity) for initial bring-up.
+
+  # ============================================================
+  # RACK & UTILITIES
+  # ============================================================
+  - name: rack-utilities
+    description: >
+      Physical rack frame, power distribution, and cabling.
+    items:
+      - part: Equipment Rack (19" Standard)
+        pn: null
+        vendor: Vertiv / APC / Chatsworth
+        qty: 1
+        unit_cost_usd: 1500
+        lead_time_weeks: 1
+        stage: "300K"
+        status: planned
+        notes: >
+          42U open frame or enclosed. Vertiv may supply at their site.
+          Need at minimum: cryostat on top or beside, instruments in rack,
+          compressor on floor beside. Confirm rack height needed.
+
+      - part: Rack PDU (Metered)
+        pn: null
+        vendor: Vertiv / APC
+        qty: 1
+        unit_cost_usd: 400
+        lead_time_weeks: 1
+        stage: "300K"
+        status: planned
+        notes: "Metered PDU, 120 V / 20 A circuit. Vertiv may supply."
+
+      - part: "Isolation Transformer (Readout Electronics)"
+        pn: IS500HG
+        vendor: Tripp Lite
+        url: https://www.tripplite.com/isolation-transformer-hospital-medical-500w-120v-4-outlet-hg~IS500HG
+        qty: 1
+        unit_cost_usd: 250
+        lead_time_weeks: 1
+        stage: "300K"
+        status: planned
+        notes: >
+          Medical-grade Faraday-shielded isolation transformer for readout
+          electronics only (Option B ground architecture — see ADR-004).
+          500 W, 120 V input/output, 4 outlets, UL 60601-1, leakage
+          current <100 µA. Isolates the measurement ground domain from
+          building mains earth. Compressor stays on direct mains (earth-
+          grounded). 1U–2U rack shelf. Upgrade to IS1000HG (1 kW, ~$400)
+          if readout hardware exceeds 500 W. Critical: no readout cable
+          shield or ground lug may touch cryostat body or rack chassis.
+
+      - part: KF/CF Vacuum Fittings and Hardware
+        pn: null
+        vendor: Kurt Lesker / MDC
+        url: https://www.lesker.com/newweb/flanges/hardware_kf_background.cfm
+        qty: 1
+        unit_cost_usd: 800
+        lead_time_weeks: 1
+        stage: "300K"
+        status: planned
+        notes: >
+          KF-25 and KF-40 flanges, centering rings, clamps, bellows hose for
+          turbo-to-cryostat pumping line, plus blanks and adapters.
+          Stock items from Lesker — ships same week.
+          If going semi-custom cryostat route (option B), also need CF-to-KF
+          adapters for the vacuum vessel ports.
+
+      - part: Pressure Relief Valve (Burst Disc)
+        pn: null
+        vendor: Kurt Lesker / MDC
+        url: https://www.lesker.com/newweb/valves/
+        qty: 1
+        unit_cost_usd: 150
+        lead_time_weeks: 1
+        stage: "300K"
+        status: planned
+        notes: >
+          SAFETY. Spring-loaded relief valve or burst disc on a KF-25 port.
+          Vents if cold head leaks He into vacuum space and pressure rises.
+          Required on any sealed cryostat. Set to ~1.5-2 atm.
+
+      - part: CF Copper Gaskets (Consumable)
+        pn: null
+        vendor: Kurt Lesker / MDC
+        url: https://www.lesker.com/newweb/flanges/hardware_cf_gaskets.cfm
+        qty: 10
+        unit_cost_usd: 20
+        lead_time_weeks: 1
+        stage: "300K"
+        status: planned
+        notes: >
+          OFHC copper CF gaskets for 8" (DN160) and smaller flanges.
+          For permanent joints (bottom plate, feedthrough ports).
+          The sample-access joint (top plate to vessel body) should use a
+          Viton O-ring groove instead — reusable, ~1e-7 Torr, adequate
+          since cryopumping at 4K maintains vacuum. Machine an O-ring
+          groove into the top plate or vessel body top flange face.
+          Viton O-rings are ~$2 each and last dozens of cycles.
+
+      - part: Indium Wire (Thermal Interface)
+        pn: null
+        vendor: Indium Corporation / Alfa Aesar
+        url: https://www.indium.com/products/wire/
+        qty: 1
+        unit_cost_usd: 80
+        lead_time_weeks: 1
+        stage: "4K/40K"
+        status: planned
+        notes: >
+          0.5-1.0 mm diameter indium wire, ~1 m. Crushed between bolted
+          cryo joints for thermal contact: cold head → thermal strap,
+          thermal strap → radiation shield, cold finger → sample stage.
+          Standard cryo practice. Also useful: Apiezon N grease as backup.
+
+      - part: Wire Heat Sinking Supplies
+        pn: null
+        vendor: Lake Shore / CMR Direct
+        url: https://www.cmr-direct.com/
+        qty: 1
+        unit_cost_usd: 100
+        lead_time_weeks: 1
+        stage: "40K"
+        status: planned
+        notes: >
+          GE varnish (or Stycast 2850FT), Kapton tape for thermally
+          anchoring DC wires and coax to the 40 K radiation shield.
+          Prevents 300 K heat from conducting straight to 4 K.
+          Wire routing bobbins and clamps can be 3D printed in PLA
+          (validated at 4K — low thermal conductivity is a feature).
+          Print custom geometry to match wire count and routing.
+
+      - part: Miscellaneous Hardware
+        pn: null
+        vendor: McMaster-Carr / Thorlabs
+        url: https://www.mcmaster.com
+        qty: 1
+        unit_cost_usd: 500
+        lead_time_weeks: 1
+        stage: "300K"
+        status: planned
+        notes: "Screws, brackets, cable ties, BNC/SMA adapters, rack shelves, etc."
