@@ -30,7 +30,7 @@ for portability between sites.
 | Cooling water | Not required |
 | Form factor | 19-inch rack (compressor rack-mounted) |
 | Vacuum | HiCube 80 Eco turbo station, <10⁻⁸ Torr ultimate |
-| Magnetic shielding | FINEMET (40 K) + superconducting Pb foil (4 K) |
+| Magnetic shielding | FINEMET (40 K), optional Pb foil (4 K) |
 | Cooldown time | ~60–90 minutes to 4 K |
 
 **Estimated cost:** ~$52k for the rack build.
@@ -69,7 +69,7 @@ flowchart TD
 
     subgraph cryostat["Cryostat (Al Vacuum Vessel)"]
         radShield["40K Radiation Shield\nAl + FINEMET + MLI"]
-        sampleStage["4K Sample Stage\nCu + Pb Foil"]
+        sampleStage["4K Sample Stage\nOFHC Cu"]
         aqfpDie["AQFP Die"]
 
         radShield -->|"2nd stage"| sampleStage
@@ -103,8 +103,8 @@ The system has three thermal stages:
   nanocrystalline magnetic shielding and MLI blankets. Wiring is thermally
   intercepted here.
 - **4.2 K (second stage):** OFHC copper sample stage where the AQFP die is
-  mounted, surrounded by superconducting lead foil for residual magnetic
-  field attenuation.
+  mounted. Optional superconducting lead foil can be added for residual
+  magnetic field attenuation if needed.
 
 ### Signal path
 
@@ -193,7 +193,7 @@ ports. Pumping connects via KF-25 ports on the vessel body.
   ║  │  │  │   │  │  │  :   :      ║
   ║  │  │  │┌─┐│  │  │  :   :      ║  ← SAMPLE STAGE (4K)
   ║  │  │  ││P││  │  │  :   :      ║     OFHC Cu plate, gold-plated
-  ║  │  │  ││b││  │  │  :   :      ║     Pb foil wrapped around DUT area
+  ║  │  │  ││ ││  │  │  :   :      ║     Optional Pb foil around DUT
   ║  │  │  │├─┤│  │  │  :   :      ║     Cernox sensor mounted here
   ║  │  │  ││D││  │  │  :   :      ║  ← DUT PCB CARRIER
   ║  │  │  ││U││  │  │  :   :      ║     Wirebonded AQFP die
@@ -259,7 +259,7 @@ ports. Pumping connects via KF-25 ports on the vessel body.
 | 23 | Thermal straps (x2) | OFHC Cu braid | 2nd stage to sample stage |
 | 23b | Alumina isolation disk | Al₂O₃ (polycrystalline) | Between cold finger and sample stage (see §1, ground isolation) |
 | 24 | Sample stage | OFHC Cu | Clamped to cold finger through alumina disk |
-| 25 | Lead foil shield | Pb, 0.1 mm | Wrapped around DUT area |
+| 25 | Lead foil shield (optional) | Pb, 0.1 mm | Wrapped around DUT area |
 | 26 | Cernox sensors (x2) | — | 2nd stage + DUT mount |
 | 27 | DUT PCB carrier | FR4/Cu | Bolted to sample stage |
 
@@ -555,7 +555,7 @@ parts. Low thermal conductivity is a feature for thermal isolation.
 |---|---|
 | Wire routing bobbins (40 K) | Custom geometry for wire routing |
 | DUT mount adapter | Fast iteration as DUT pinout changes |
-| Magnetic shield brackets | Hold FINEMET + Pb foil in position |
+| Magnetic shield brackets | Hold FINEMET (+ optional Pb foil) in position |
 | Thermal isolation standoffs | Low-conductivity spacers between stages |
 | Feedthrough strain reliefs | Cable management |
 
