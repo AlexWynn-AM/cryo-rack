@@ -59,15 +59,14 @@ flowchart TD
     isoXfmr["Isolation Transformer\nTripp Lite IS500HG"]
     tempController["Cryocon 22C\nTemp Controller"]
     testEquip["Test & Computing\nInterfaces"]
-    gauge["Pirani Gauge"]
-    relief["Pressure Relief Valve"]
-
-    subgraph topInterface["Top Plate Interface (300K)"]
-        coldHead["RDK-101D\nGM Cold Head"]
-        feedthroughs["Feedthroughs\nD-sub x2, SMA x4"]
-    end
 
     subgraph cryostat["Cryostat (Al Vacuum Vessel)"]
+        subgraph topPlate["Top Plate (300K)"]
+            coldHead["RDK-101D\nGM Cold Head"]
+            feedthroughs["Feedthroughs\nD-sub x2, SMA x4"]
+            gauge["Pirani Gauge"]
+            relief["Pressure Relief"]
+        end
         radShield["40K Radiation Shield\nAl + FINEMET + MLI"]
         sampleStage["4K Sample Stage\nOFHC Cu"]
         aqfpDie["AQFP Die"]
@@ -83,14 +82,11 @@ flowchart TD
 
     compressor -->|"He flex lines"| coldHead
     coldHead -->|"1st stage"| radShield
-    pumpStation -->|"KF-25 bellows"| cryostat
+    pumpStation -->|"KF-25 bellows"| gauge
     tempController -->|"4-wire sensor"| feedthroughs
     testEquip -->|"BNC / SMA"| feedthroughs
     feedthroughs -->|"heat-sunk"| radShield
     radShield --> sampleStage
-
-    gauge --> cryostat
-    relief --> cryostat
 ```
 
 ### Thermal stages
