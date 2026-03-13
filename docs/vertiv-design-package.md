@@ -12,6 +12,8 @@ date: "2026-03-10"
 
 ## Executive Summary
 
+![Cryo rack concept render](assets/cryo_rack_render.jpg)
+
 This document describes the design of a self-contained cryogenic rack
 for deploying AQFP (Adiabatic Quantum Flux Parametron) superconducting
 processors at 4.2 K. The system is built entirely from off-the-shelf and
@@ -55,17 +57,12 @@ the front or rear panel.
 ```mermaid
 flowchart TD
     power["120V / 15A\nWall Outlet"]
-
-    power --> compressor["CNA-11RC\nHe Compressor\n1.2 kW, air-cooled"]
-    power --> pumpStation["HiCube 80 Eco\nTurbo Station"]
-    power --> tempController["Cryocon 22C\nTemp Controller"]
-
+    compressor["CNA-11RC\nHe Compressor\n1.2 kW, air-cooled"]
+    pumpStation["HiCube 80 Eco\nTurbo Station"]
+    tempController["Cryocon 22C\nTemp Controller"]
     testEquip["External Test Equipment\nYokogawa GS200 + Keithley 2182A"]
-
-    compressor -->|"He flex lines (3 m)"| coldHead
-    pumpStation -->|"KF-25 bellows hose"| vessel
-    tempController -->|"4-wire sensor cables"| feedthroughs
-    testEquip -->|"BNC / SMA cables"| feedthroughs
+    gauge["Pirani Gauge"]
+    relief["Pressure Relief Valve"]
 
     subgraph cryostat["Cryostat Assembly"]
         vessel["SS Vacuum Vessel\n6-inch CF Nipple"]
@@ -82,8 +79,17 @@ flowchart TD
         sampleStage --> aqfpDie
     end
 
-    gauge["Pirani Gauge"] --> vessel
-    relief["Pressure Relief Valve"] --> vessel
+    power --> compressor
+    power --> pumpStation
+    power --> tempController
+
+    compressor -->|"He flex lines (3 m)"| coldHead
+    pumpStation -->|"KF-25 bellows hose"| vessel
+    tempController -->|"4-wire sensor cables"| feedthroughs
+    testEquip -->|"BNC / SMA cables"| feedthroughs
+
+    gauge --> vessel
+    relief --> vessel
 ```
 
 ### Thermal stages
