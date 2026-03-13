@@ -33,8 +33,7 @@ for portability between sites.
 | Magnetic shielding | FINEMET (40 K) + superconducting Pb foil (4 K) |
 | Cooldown time | ~60–90 minutes to 4 K |
 
-**Estimated cost:** ~$52k for the rack build, plus ~$11k for external test
-equipment (Yokogawa GS200 + Keithley 2182A) if not already available.
+**Estimated cost:** ~$52k for the rack build.
 
 **Timeline:** 4 weeks from procurement start to operational, gated by the
 12-week cryocooler lead time.
