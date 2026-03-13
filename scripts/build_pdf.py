@@ -159,11 +159,16 @@ def render_mermaid_blocks(html: str, tmp_dir: Path) -> str:
 
 def build_title_html(bom: dict) -> str:
     rev = bom.get("revision", "?")
+    concept_img = REPO_ROOT / "docs" / "assets" / "cryo_rack_render.jpg"
+    img_html = ""
+    if concept_img.exists():
+        img_html = f'<img src="{concept_img}" alt="Cryo rack concept" class="title-image" />'
     return f"""
 <div class="title-block">
     <h1>AQFP Cryogenic Rack</h1>
     <div class="subtitle">Design Package</div>
     <div class="subtitle">Revision {rev} &mdash; {date.today().strftime("%B %Y")}</div>
+    {img_html}
     <div class="meta">
         Prepared for deployment at Vertiv, CBA, and AM
     </div>
