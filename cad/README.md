@@ -18,9 +18,12 @@ cad/
 │   ├── vacuum-vessel.py         # → vacuum-vessel.FCStd
 │   ├── top-plate.py             # → top-plate.FCStd
 │   ├── thermal-straps.py        # → thermal-straps.FCStd
-│   └── wiring.py                # → wiring.FCStd
+│   ├── wiring.py                # → wiring.FCStd
+│   ├── server-rack.py           # → server-rack.FCStd (42U rack frame)
+│   └── cna-11r-compressor.py    # → cna-11r-compressor.FCStd
 ├── assembly/
-│   └── cryostat-assembly.py     # → cryostat-assembly.FCStd
+│   ├── cryostat-assembly.py     # → cryostat-assembly.FCStd
+│   └── rack-assembly.png        # Assembly screenshot
 ├── exports/                     # STEP files for external sharing
 │   └── (generated on demand)
 └── reference/
@@ -88,6 +91,20 @@ freecadcmd rdk-101d-cold-head.py  # Generates .FCStd file
 - **Size:** Ø28 mm × 1.5 mm thick
 - **Purpose:** Electrical isolation between cold head and sample stage
 
+### CNA-11R Compressor (SHI Cryogenics)
+- **Source:** SHI CNA-11RB specifications
+- **Size:** 400 × 484 × 540 mm (H × W × D)
+- **Weight:** 65 kg
+- **Rack units:** 9U
+- **Cooling:** Air-cooled
+- **Compatible with:** RDK-101D cold head
+
+### Server Rack
+- **Source:** Based on Vertiv VR3100 dimensions
+- **Size:** 42U, 600 × 1100 mm (W × D)
+- **Rail spacing:** 465.1 mm (19" EIA standard)
+- **Style:** Open frame for visibility
+
 ## Parametric Variables
 
 All envelope dimensions are linked to `dimensions.ods`. Edit the spreadsheet
@@ -113,6 +130,27 @@ to update all linked parts automatically.
 - Sample stage thermally connected to 2nd stage via Cu straps
 - Alumina disk provides electrical isolation at 4K
 - All wiring routes: top plate → 40K heatsink → 4K
+
+## Rack Assembly
+
+The cryostat mounts in a standard 42U server rack with the CNA-11R compressor.
+
+![Rack Assembly](assembly/rack-assembly.png)
+
+### Components
+- **Server rack:** 42U open frame (600 × 1100 mm), based on Vertiv VR3100
+- **Cryostat position:** U35-U42 (near top), mounted on aluminum frame
+- **Compressor position:** U1-U9 (bottom)
+- **Mounting frame:** 6061-T6 aluminum plate (6mm thick) with center cutout for DN320CF flange
+
+### Rack Specifications
+| Parameter | Value |
+|-----------|-------|
+| Rack units | 42U (1867 mm usable) |
+| External width | 600 mm |
+| External depth | 1100 mm |
+| Rail spacing | 465.1 mm (19" standard) |
+| Cryostat clearance | ~40 mm each side between flange and rails |
 
 ## Export Instructions
 
