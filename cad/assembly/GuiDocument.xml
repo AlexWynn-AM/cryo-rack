@@ -1,6 +1,18 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Document SchemaVersion="1">
-  <ViewProviderData Count="12">
+  <ViewProviderData Count="15">
+    <ViewProvider name="ServerRack" expanded="0">
+      <Properties Count="2">
+        <Property name="ShapeColor" type="App::PropertyColor"><Color value="858993664"/></Property>
+        <Property name="Visibility" type="App::PropertyBool"><Bool value="true"/></Property>
+      </Properties>
+    </ViewProvider>
+    <ViewProvider name="CNA11R_Compressor" expanded="0">
+      <Properties Count="2">
+        <Property name="ShapeColor" type="App::PropertyColor"><Color value="656877568"/></Property>
+        <Property name="Visibility" type="App::PropertyBool"><Bool value="true"/></Property>
+      </Properties>
+    </ViewProvider>
     <ViewProvider name="ColdHead_Motor" expanded="0">
       <Properties Count="2">
         <Property name="ShapeColor" type="App::PropertyColor"><Color value="1288490240"/></Property>
@@ -75,6 +87,12 @@
         <Property name="Visibility" type="App::PropertyBool"><Bool value="true"/></Property>
       </Properties>
     </ViewProvider>
+    <ViewProvider name="MountingFrame" expanded="0">
+      <Properties Count="2">
+        <Property name="ShapeColor" type="App::PropertyColor"><Color value="1920103680"/></Property>
+        <Property name="Visibility" type="App::PropertyBool"><Bool value="true"/></Property>
+      </Properties>
+    </ViewProvider>
   </ViewProviderData>
-  <Camera settings="  OrthographicCamera {   viewportMapping ADJUST_CAMERA   position 800 800 400   orientation 0.2 0.2 0.95 2.6   nearDistance 0.1   farDistance 10000   aspectRatio 1   focalDistance 1200   height 1500 } "/>
+  <Camera settings="  OrthographicCamera {   viewportMapping ADJUST_CAMERA   position 2000 -2500 2000   orientation 0.44 0.22 0.44 1.75   nearDistance 0.1   farDistance 20000   aspectRatio 1   focalDistance 3500   height 3200 } "/>
 </Document>
