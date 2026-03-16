@@ -234,6 +234,28 @@ assemblies:
           holes for PCB standoffs and Pb foil shield bracket. Simple part.
           Target: ~Ø50 mm × 20 mm thick, with M3/M4 tapped holes.
 
+      - part: "Cryostat Mounting Frame (Aluminum Sheet)"
+        pn: null
+        vendor: "Local sheet metal shop / SendCutSend / Xometry"
+        url: https://sendcutsend.com
+        qty: 1
+        unit_cost_usd: 300
+        lead_time_weeks: 2
+        stage: "300K"
+        status: planned
+        notes: >
+          6061-T6 aluminum plate, 6mm (1/4") thick, laser cut and bent.
+          Rectangular plate (~525 x 1040 mm) with center cutout for DN320CF
+          vessel flange (Ø328mm hole with 40mm lip). Four bent mounting tabs
+          (4U tall, 44mm wide) bolt to front and rear 19" rack rails at
+          standard M6 spacing. Corner relief holes for stress reduction.
+          Triangular gussets welded at tab bases for rigidity.
+          Total weight ~15 kg. Supports ~100 kg cryostat load.
+          CAD model: cad/assembly/cryostat-assembly.py (MountingFrame).
+          Can be fabricated by any sheet metal shop with laser cutter and
+          brake press. SendCutSend for fast-turn prototype (~$200-400
+          depending on complexity). Local shop for production.
+
       - part: "Alumina Electrical Isolation Disk (4K)"
         pn: null
         vendor: CoorsTek / McMaster-Carr
