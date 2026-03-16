@@ -289,3 +289,14 @@ only. Ceramic-to-metal hermetic feedthroughs maintain isolation by design.
 6. **RDK-101D CF flange size**: believed CF4.50 / DN63CF based on
    130 mm body envelope. Confirm with SHI before ordering zero-length
    reducer.
+
+---
+
+## Working Render
+
+FreeCAD model of the complete rack-mounted system:
+
+![Rack Assembly](../cad/assembly/rack-assembly.png)
+
+*42U rack with cryostat mounted at U35 (top) and CNA-11R compressor at U1 (bottom).
+Aluminum mounting frame supports cryostat flange on 19" rails.*
