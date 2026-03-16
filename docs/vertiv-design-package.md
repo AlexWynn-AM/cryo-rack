@@ -582,3 +582,12 @@ vacuum vessel (SS), thermal straps (OFHC Cu).
 PLA outgasses at room temperature in vacuum but this is handled by
 the turbo pump during pumpdown (adds a few minutes). Once cold,
 outgassing drops to near zero.
+
+## Appendix C: CAD Render
+
+FreeCAD model of the complete rack-mounted system:
+
+![Rack Assembly](../cad/assembly/rack-assembly.png)
+
+*42U rack with cryostat mounted at U35 (top) and CNA-11R compressor at U1 (bottom).
+6mm aluminum mounting frame supports cryostat flange on 19" rails.*
