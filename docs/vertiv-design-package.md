@@ -4,7 +4,7 @@ revision: "0.6"
 date: "2026-03-10"
 ---
 
-# AQFP Cryogenic Rack — Design Package
+<div style="text-align: center;"><img src="assets/cryo_rack_render.jpg" style="width: 350px;"></div>
 
 **Revision 0.6 — March 2026**
 
@@ -51,43 +51,7 @@ vacuum system, magnetic shielding, and instrumentation are housed in a
 standard 19-inch rack, with all signal and power connections accessible from
 the front or rear panel.
 
-```mermaid
-flowchart TD
-    power["120V / 15A\nWall Outlet"]
-    compressor["CNA-11RC\nHe Compressor\n1.2 kW, air-cooled"]
-    pumpStation["HiCube 80 Eco\nTurbo Station"]
-    isoXfmr["Isolation Transformer\nTripp Lite IS500HG"]
-    tempController["Cryocon 22C\nTemp Controller"]
-    testEquip["Test & Computing\nInterfaces"]
-
-    subgraph cryostat["Cryostat (Al Vacuum Vessel)"]
-        subgraph topPlate["Top Plate (300K)"]
-            coldHead["RDK-101D\nGM Cold Head"]
-            feedthroughs["Feedthroughs\nD-sub x2, SMA x4"]
-            gauge["Pirani Gauge"]
-            relief["Pressure Relief"]
-        end
-        radShield["40K Radiation Shield\nAl + FINEMET + MLI"]
-        sampleStage["4K Sample Stage\nOFHC Cu"]
-        aqfpDie["AQFP Die"]
-
-        sampleStage --> aqfpDie
-    end
-
-    power --> compressor
-    power --> pumpStation
-    power --> isoXfmr
-    isoXfmr --> tempController
-    isoXfmr --> testEquip
-
-    compressor -->|"He flex lines"| coldHead
-    coldHead -->|"1st stage"| radShield
-    pumpStation -->|"KF-25 bellows"| gauge
-    tempController -->|"4-wire sensor"| feedthroughs
-    testEquip -->|"BNC / SMA"| feedthroughs
-    feedthroughs -->|"heat-sunk"| radShield
-    radShield --> sampleStage
-```
+![System Architecture](assets/system-architecture.png)
 
 ### Thermal stages
 
