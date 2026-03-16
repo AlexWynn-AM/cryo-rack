@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<office:document xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
+                 xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0"
+                 xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
+                 xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
+                 xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
+                 office:version="1.2"
+                 office:mimetype="application/vnd.oasis.opendocument.spreadsheet">
+  <office:body>
+    <office:spreadsheet>
+      <table:table table:name="Dimensions">
+        <!-- Header Row -->
+        <table:table-row>
+          <table:table-cell><text:p>Parameter</text:p></table:table-cell>
+          <table:table-cell><text:p>Value</text:p></table:table-cell>
+          <table:table-cell><text:p>Unit</text:p></table:table-cell>
+          <table:table-cell><text:p>Description</text:p></table:table-cell>
+        </table:table-row>
+
+        <!-- Cold Head Dimensions -->
+        <table:table-row>
+          <table:table-cell><text:p>cold_head_total_height</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="442"><text:p>442</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>RDK-101D total height motor to 2nd stage tip</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>motor_diameter</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="130"><text:p>130</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Motor housing diameter</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>motor_height</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="200"><text:p>200</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Motor housing height (above CF flange)</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>first_stage_diameter</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="108"><text:p>108</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>1st stage flange diameter (45K)</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>first_stage_height</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="30"><text:p>30</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>1st stage flange height</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>first_to_second_distance</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="140"><text:p>140</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Distance from 1st stage bottom to 2nd stage top</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>second_stage_upper_diameter</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="52"><text:p>52</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>2nd stage upper section diameter</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>second_stage_lower_diameter</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="45"><text:p>45</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>2nd stage cold tip diameter (4K)</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>second_stage_height</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="40"><text:p>40</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>2nd stage total height</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>cf_flange_diameter</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="114"><text:p>114</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>DN63CF flange OD (CF4.50)</text:p></table:table-cell>
+        </table:table-row>
+
+        <!-- Vacuum Vessel Dimensions (DN320CF) -->
+        <table:table-row>
+          <table:table-cell><text:p>vessel_cf_size</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="320"><text:p>320</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>DN320CF nominal size</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>vessel_id</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="320"><text:p>320</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Vessel inner diameter</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>vessel_od</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="324"><text:p>324</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Vessel outer diameter (12" Sch 10 pipe)</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>vessel_wall</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="4"><text:p>4</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Vessel wall thickness</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>vessel_length</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="550"><text:p>550</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Vessel length (extended for 250mm sample stage)</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>vessel_flange_od</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="368"><text:p>368</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>DN320CF flange OD (14.5")</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>vessel_flange_thickness</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="20"><text:p>20</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>CF flange thickness</text:p></table:table-cell>
+        </table:table-row>
+
+        <!-- Radiation Shield Dimensions (12" aluminum tube) -->
+        <table:table-row>
+          <table:table-cell><text:p>shield_od</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="300"><text:p>300</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Radiation shield outer diameter (12" nom tube)</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>shield_height</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="450"><text:p>450</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Radiation shield total height</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>shield_wall</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="2"><text:p>2</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Radiation shield wall thickness</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>shield_bottom_thickness</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="3"><text:p>3</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Shield bottom cap thickness</text:p></table:table-cell>
+        </table:table-row>
+
+        <!-- Sample Stage Dimensions (large cylindrical envelope) -->
+        <table:table-row>
+          <table:table-cell><text:p>sample_stage_dia</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="250"><text:p>250</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Sample stage diameter</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>sample_stage_thick</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="250"><text:p>250</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Sample stage height</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>sample_stage_hole_dia</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="3.2"><text:p>3.2</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>M3 clearance holes</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>sample_stage_hole_pcd</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="40"><text:p>40</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Mounting hole pitch circle diameter</text:p></table:table-cell>
+        </table:table-row>
+
+        <!-- Alumina Disk Dimensions -->
+        <table:table-row>
+          <table:table-cell><text:p>alumina_diameter</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="28"><text:p>28</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Alumina isolation disk diameter</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>alumina_thickness</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="1.5"><text:p>1.5</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Alumina disk thickness</text:p></table:table-cell>
+        </table:table-row>
+
+        <!-- Top Plate Dimensions -->
+        <table:table-row>
+          <table:table-cell><text:p>top_plate_od</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="254"><text:p>254</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Top plate outer diameter (DN200CF)</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>top_plate_thickness</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="25"><text:p>25</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Top plate thickness</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>cold_head_bore</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="70"><text:p>70</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Center bore for cold head (DN63CF)</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>feedthrough_port_dia</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="35"><text:p>35</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>CF16 feedthrough port diameter</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>feedthrough_port_pcd</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="90"><text:p>90</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Feedthrough port pitch circle diameter</text:p></table:table-cell>
+        </table:table-row>
+
+        <!-- Thermal Strap Dimensions -->
+        <table:table-row>
+          <table:table-cell><text:p>strap_width</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="15"><text:p>15</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Thermal strap braid width</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>strap_thickness</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="3"><text:p>3</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Thermal strap braid thickness</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>strap_1st_length</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="60"><text:p>60</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>1st stage to shield strap length</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>strap_2nd_length</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="40"><text:p>40</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>2nd stage to sample strap length</text:p></table:table-cell>
+        </table:table-row>
+
+        <!-- Wiring Dimensions -->
+        <table:table-row>
+          <table:table-cell><text:p>coax_od</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="2.2"><text:p>2.2</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>0.086" semi-rigid SS coax OD</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>wire_loom_dia</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="8"><text:p>8</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>DC wire loom bundle diameter</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>wire_300k_to_40k</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="200"><text:p>200</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Wire length from top plate to 40K heatsink</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>wire_40k_to_4k</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="150"><text:p>150</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Wire length from 40K to 4K sample stage</text:p></table:table-cell>
+        </table:table-row>
+
+        <!-- Clearances -->
+        <table:table-row>
+          <table:table-cell><text:p>shield_to_vessel_gap</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="10"><text:p>10</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Minimum gap between shield and vessel wall</text:p></table:table-cell>
+        </table:table-row>
+        <table:table-row>
+          <table:table-cell><text:p>sample_to_shield_gap</text:p></table:table-cell>
+          <table:table-cell office:value-type="float" office:value="15"><text:p>15</text:p></table:table-cell>
+          <table:table-cell><text:p>mm</text:p></table:table-cell>
+          <table:table-cell><text:p>Gap between sample stage and shield bottom</text:p></table:table-cell>
+        </table:table-row>
+      </table:table>
+    </office:spreadsheet>
+  </office:body>
+</office:document>

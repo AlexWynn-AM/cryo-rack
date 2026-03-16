@@ -24,3 +24,4 @@ exports/
 # Build artifacts (regenerate with: .venv/bin/python scripts/build_pdf.py)
 docs/cryo-rack-design-package.pdf
 docs/cryo-rack-design-package.html
+*.FCBak

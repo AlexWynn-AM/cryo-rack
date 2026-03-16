@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Document SchemaVersion="1">
+  <ViewProviderData Count="12">
+    <ViewProvider name="ColdHead_Motor" expanded="0">
+      <Properties Count="2">
+        <Property name="ShapeColor" type="App::PropertyColor"><Color value="1288490240"/></Property>
+        <Property name="Visibility" type="App::PropertyBool"><Bool value="true"/></Property>
+      </Properties>
+    </ViewProvider>
+    <ViewProvider name="ColdHead_CFFlange" expanded="0">
+      <Properties Count="2">
+        <Property name="ShapeColor" type="App::PropertyColor"><Color value="2139062272"/></Property>
+        <Property name="Visibility" type="App::PropertyBool"><Bool value="true"/></Property>
+      </Properties>
+    </ViewProvider>
+    <ViewProvider name="ColdHead_Transition" expanded="0">
+      <Properties Count="2">
+        <Property name="ShapeColor" type="App::PropertyColor"><Color value="2139062272"/></Property>
+        <Property name="Visibility" type="App::PropertyBool"><Bool value="true"/></Property>
+      </Properties>
+    </ViewProvider>
+    <ViewProvider name="ColdHead_1stStage" expanded="0">
+      <Properties Count="2">
+        <Property name="ShapeColor" type="App::PropertyColor"><Color value="1721355520"/></Property>
+        <Property name="Visibility" type="App::PropertyBool"><Bool value="true"/></Property>
+      </Properties>
+    </ViewProvider>
+    <ViewProvider name="ColdHead_2ndTube" expanded="0">
+      <Properties Count="2">
+        <Property name="ShapeColor" type="App::PropertyColor"><Color value="2139062272"/></Property>
+        <Property name="Visibility" type="App::PropertyBool"><Bool value="true"/></Property>
+      </Properties>
+    </ViewProvider>
+    <ViewProvider name="ColdHead_2ndTip" expanded="0">
+      <Properties Count="2">
+        <Property name="ShapeColor" type="App::PropertyColor"><Color value="1284096000"/></Property>
+        <Property name="Visibility" type="App::PropertyBool"><Bool value="true"/></Property>
+      </Properties>
+    </ViewProvider>
+    <ViewProvider name="AluminaDisk" expanded="0">
+      <Properties Count="2">
+        <Property name="ShapeColor" type="App::PropertyColor"><Color value="4042322688"/></Property>
+        <Property name="Visibility" type="App::PropertyBool"><Bool value="true"/></Property>
+      </Properties>
+    </ViewProvider>
+    <ViewProvider name="SampleVolume" expanded="0">
+      <Properties Count="2">
+        <Property name="ShapeColor" type="App::PropertyColor"><Color value="3554428160"/></Property>
+        <Property name="Visibility" type="App::PropertyBool"><Bool value="true"/></Property>
+      </Properties>
+    </ViewProvider>
+    <ViewProvider name="RadiationShield" expanded="0">
+      <Properties Count="3">
+        <Property name="ShapeColor" type="App::PropertyColor"><Color value="3233857792"/></Property>
+        <Property name="Transparency" type="App::PropertyPercent"><Integer value="60"/></Property>
+        <Property name="Visibility" type="App::PropertyBool"><Bool value="true"/></Property>
+      </Properties>
+    </ViewProvider>
+    <ViewProvider name="VacuumVessel_Body" expanded="0">
+      <Properties Count="3">
+        <Property name="ShapeColor" type="App::PropertyColor"><Color value="2576980736"/></Property>
+        <Property name="Transparency" type="App::PropertyPercent"><Integer value="50"/></Property>
+        <Property name="Visibility" type="App::PropertyBool"><Bool value="true"/></Property>
+      </Properties>
+    </ViewProvider>
+    <ViewProvider name="VacuumVessel_BottomFlange" expanded="0">
+      <Properties Count="2">
+        <Property name="ShapeColor" type="App::PropertyColor"><Color value="2576980736"/></Property>
+        <Property name="Visibility" type="App::PropertyBool"><Bool value="true"/></Property>
+      </Properties>
+    </ViewProvider>
+    <ViewProvider name="TopPlate" expanded="0">
+      <Properties Count="2">
+        <Property name="ShapeColor" type="App::PropertyColor"><Color value="2576980736"/></Property>
+        <Property name="Visibility" type="App::PropertyBool"><Bool value="true"/></Property>
+      </Properties>
+    </ViewProvider>
+  </ViewProviderData>
+  <Camera settings="  OrthographicCamera {   viewportMapping ADJUST_CAMERA   position 800 800 400   orientation 0.2 0.2 0.95 2.6   nearDistance 0.1   farDistance 10000   aspectRatio 1   focalDistance 1200   height 1500 } "/>
+</Document>
