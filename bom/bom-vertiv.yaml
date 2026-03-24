@@ -10,12 +10,174 @@ notes: >
   Vertiv demo system. Vertiv may supply rack infrastructure, power distribution,
   and cooling water. Confirm what they provide vs what we bring.
 
-overrides: []
-  # Example:
-  # - assembly: rack-utilities
-  #   part: Equipment Rack (19" Standard)
-  #   status: provided-by-vertiv
-  #   notes: "Vertiv supplying rack and PDU from their demo floor."
+# ===========================================================================
+# POWER & GROUNDING ARCHITECTURE  (implements ADR-004 Option B)
+# ===========================================================================
+# Two ground domains, single well-defined interface. See ADR-004 for rationale.
+#
+# DOMAIN 1 — Earth Ground (compressor / infrastructure)
+#   Wall 20A/120V → PDU (VP8830) → compressor, turbo pump, vacuum gauge
+#   Ground path: building mains earth → PDU chassis → compressor chassis →
+#   SS flex lines → cold head body → vacuum jacket → rack chassis.
+#   Carries compressor motor currents (~1 Hz GM valve transients).
+#   NO measurement signals on this domain.
+#
+# DOMAIN 2 — Isolated Measurement Ground (readout chain)
+#   Wall 20A/120V → PDU (VP8830) → UPS (GXT5, online double-conversion) →
+#   Isolation transformer (IS500HG, Faraday-shielded) → readout electronics
+#   Ground path: IS500HG secondary → readout ground bus → DC feedthrough
+#   pins (ceramic-sealed, isolated from flange) → PhBr wires → Cu backplane
+#   at 4 K → AQFP circuit ground.
+#   Carries only signal and bias currents.
+#
+# The UPS and isolation transformer are in series on Domain 2:
+#   - UPS (GXT5): AC→rectifier→DC battery bus→inverter→AC. Power always
+#     traverses the battery bus — never passes mains through. Provides
+#     ride-through for outages, line conditioning (clean sine), and
+#     common-mode transient rejection. NOTE: output neutral is bonded to
+#     chassis/earth ground per NEC — the UPS alone does NOT break the
+#     galvanic path to building earth.
+#   - Isolation transformer (IS500HG): Faraday-shielded winding provides
+#     true galvanic isolation. THIS is the component that defines the
+#     isolated measurement ground reference. Leakage current < 100 µA.
+#
+# ISOLATION INTERFACES (Domain 1 ↔ Domain 2 boundary):
+#   4 K:   Alumina disk (Al₂O₃) between cold finger and Cu backplane,
+#          indium foil both faces. Breaks galvanic path through cryocooler.
+#   300 K: Ceramic-to-metal seals in hermetic feedthroughs — pins are
+#          isolated from flange body by design. No coax shield or cable
+#          braid may connect to the flange housing.
+#   300 K: Isolation transformer secondary defines Domain 2 ground.
+#
+# CRITICAL ASSEMBLY RULES:
+#   - Compressor plugs into PDU DIRECTLY (Domain 1). Never behind UPS.
+#   - Readout electronics plug into isolation transformer ONLY (Domain 2).
+#   - Temperature controller (Cryocon 22C) may go on either domain:
+#     Domain 2 (behind UPS+iso xfmr) if it shares ground with readout,
+#     Domain 1 if heater output connects to cryostat body. Confirm wiring.
+#   - Turbo pump + vacuum gauge → PDU direct (Domain 1). Earth-grounded,
+#     no measurement signals.
+#   - NO cable shield, ground lug, debug probe, or scope ground clip may
+#     touch cryostat body, vacuum jacket, or rack chassis while connected
+#     to Domain 2 equipment. This re-establishes the ground loop that the
+#     alumina disk and isolation transformer are there to break.
+#   - Rack chassis is Domain 1 (earth ground). Metal rack shelves holding
+#     Domain 2 equipment (iso xfmr, readout) must not create a ground
+#     path — use insulating feet or a non-conductive shelf liner.
+# ===========================================================================
 
-additions: []
-  # Items unique to Vertiv deployment
+overrides:
+  - assembly: rack-utilities
+    part: Equipment Rack (19" Standard)
+    pn: VR3100
+    vendor: Vertiv
+    url: https://www.vertiv.com/en-us/products-catalog/facilities-enclosures-and-racks/racks-and-containment/vertiv-vr-rack/
+    unit_cost_usd: 1500
+    lead_time_weeks: 1
+    status: planned
+    notes: >
+      Vertiv VR3100: 42U, 600mm W x 1100mm D, standard 19" rack. 3,000 lbs
+      static load capacity. 77% perforated front/rear doors, EIA-310D rails,
+      split rear doors, tool-less mounting, 3-year warranty.
+      Vertiv may supply from demo floor stock — confirm before ordering.
+
+  - assembly: rack-utilities
+    part: Rack PDU (Metered)
+    pn: VP8830
+    vendor: Vertiv (Geist)
+    url: https://www.vertiv.com/en-us/products-catalog/critical-power/power-distribution/vertiv-monitored-rack-pdu/
+    unit_cost_usd: 510
+    lead_time_weeks: 1
+    status: planned
+    notes: >
+      Vertiv Geist VP8830: Monitored rack PDU, 20A / 120V, 24x NEMA 5-20R,
+      1.9 kW max. 0U vertical mount. Unit-level current monitoring with
+      high-visibility LED display, dual Ethernet ports, SNMP/web interface.
+      Upgradeable firmware. 5-year warranty (if registered within 120 days).
+      NEMA L5-20P twist-lock input, 10 ft cord.
+      Useful for tracking load budget during demo — compressor alone is
+      ~12.5A on 120V, need to watch headroom for instruments.
+      Upgrade option: VP8930 (switched) adds per-outlet on/off and remote
+      reboot capability (~$877).
+
+additions:
+  - assembly: rack-utilities
+    part: Rack Shelf (Fixed, 1U)
+    pn: VRA3000
+    vendor: Vertiv
+    url: https://www.vertiv.com/en-us/products-catalog/facilities-enclosures-and-racks/racks-and-containment/vertiv-vr-rack-accessories/
+    qty: 2
+    unit_cost_usd: 80
+    lead_time_weeks: 1
+    stage: "300K"
+    status: planned
+    notes: >
+      Vertiv VRA3000: 1U depth-adjustable fixed shelf, 250 lbs capacity,
+      adjustable depth 27.6"–33.6". For mounting non-rackmount equipment:
+      temperature controller (Cryocon 22C), vacuum gauge, isolation
+      transformer. Two shelves covers the non-rackmount gear.
+
+  - assembly: rack-utilities
+    part: Horizontal Cable Manager (1U)
+    pn: VRA1002
+    vendor: Vertiv
+    url: https://www.vertiv.com/en-us/products-catalog/facilities-enclosures-and-racks/racks-and-containment/vertiv-vr-rack-accessories/
+    qty: 2
+    unit_cost_usd: 50
+    lead_time_weeks: 1
+    stage: "300K"
+    status: planned
+    notes: >
+      Vertiv VRA1002: 1U x 4" deep horizontal cable manager, single-sided
+      with cover. Place between instrument groups to route DC wiring,
+      thermocouple leads, and vacuum gauge cables cleanly. Keeps signal
+      wiring separated from power cables — matters for low-noise readout.
+
+  - assembly: rack-utilities
+    part: Blanking Panel Kit
+    pn: VRA2002
+    vendor: Vertiv
+    url: https://www.vertiv.com/en-us/products-catalog/facilities-enclosures-and-racks/racks-and-containment/vertiv-vr-rack-accessories---airflow-management/
+    qty: 1
+    unit_cost_usd: 30
+    lead_time_weeks: 1
+    stage: "300K"
+    status: planned
+    notes: >
+      Vertiv VRA2002: Sheet metal blanking panel kit — includes 1U, 2U,
+      4U, and 8U panels (1 each). Fill unused rack space above/below
+      instruments. Clean look for demo, and prevents dust from settling
+      on exposed vacuum hardware.
+
+  - assembly: rack-utilities
+    part: UPS (Online Double-Conversion, 1500VA)
+    pn: GXT5-1500LVRT2UXL
+    vendor: Vertiv (Liebert)
+    url: https://www.vertiv.com/en-us/products-catalog/critical-power/uninterruptible-power-supplies-ups/vertiv-liebert-gxt5-ups-500-3000va-120v-ups/
+    qty: 1
+    unit_cost_usd: 800
+    lead_time_weeks: 1
+    stage: "300K"
+    status: planned
+    notes: >
+      Vertiv Liebert GXT5-1500LVRT2UXL: 1500VA / 1350W, 120V, online
+      double-conversion, 2U rack/tower. 6x NEMA 5-15R outlets. Input
+      range 60–150 VAC.
+      TOPOLOGY: Online double-conversion = power ALWAYS goes through
+      rectifier → DC battery bus → inverter. Mains AC never passes
+      straight to output. This makes the UPS an effective isolation
+      stage for line transients and common-mode noise, and provides
+      seamless ride-through during outages.
+      GROUNDING: The UPS output neutral is bonded to chassis ground
+      (NEC requirement), so it does NOT provide true galvanic isolation
+      from building earth. The downstream isolation transformer (IS500HG)
+      is what breaks the galvanic path and defines the isolated
+      measurement ground. The two work in series: UPS cleans the power,
+      iso xfmr breaks the ground.
+      DOMAIN 2 ONLY: Feeds the isolation transformer, which feeds
+      readout electronics. Do NOT put the compressor on the UPS —
+      1.5 kW steady draw exceeds UPS capacity and the compressor must
+      remain earth-grounded (Domain 1) per ADR-004.
+      A power blip mid-cooldown means hours of lost time re-cooling.
+      Li-Ion variant: GXT5LI-1500LVRT2UXLN (lighter, 5-yr battery
+      warranty, includes network card).
