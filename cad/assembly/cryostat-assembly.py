@@ -561,3 +561,19 @@ doc.recompute()
 doc.saveAs("cryostat-assembly.FCStd")
 
 print("\nAssembly saved to cryostat-assembly.FCStd")
+
+# ============================================================================
+# Export STEP file
+# ============================================================================
+
+import os
+import Import
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+export_dir = os.path.join(script_dir, "..", "exports")
+os.makedirs(export_dir, exist_ok=True)
+step_path = os.path.join(export_dir, "cryostat-assembly.step")
+
+objs = [obj for obj in doc.Objects if hasattr(obj, "Shape")]
+Import.export(objs, step_path)
+print(f"STEP exported to {step_path}")

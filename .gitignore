@@ -16,8 +16,9 @@ package.json
 .DS_Store
 Thumbs.db
 
-# Generated exports
-exports/
+# Generated exports (except STEP — tracked for external sharing)
+exports/*
+!exports/*.step
 *.xlsx
 !scripts/*.xlsx
 
