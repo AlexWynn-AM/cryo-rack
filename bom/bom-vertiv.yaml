@@ -66,39 +66,9 @@ notes: >
 #     path — use insulating feet or a non-conductive shelf liner.
 # ===========================================================================
 
-overrides:
-  - assembly: rack-utilities
-    part: Equipment Rack (19" Standard)
-    pn: VR3100
-    vendor: Vertiv
-    url: https://www.vertiv.com/en-us/products-catalog/facilities-enclosures-and-racks/racks-and-containment/vertiv-vr-rack/
-    unit_cost_usd: 1500
-    lead_time_weeks: 1
-    status: planned
-    notes: >
-      Vertiv VR3100: 42U, 600mm W x 1100mm D, standard 19" rack. 3,000 lbs
-      static load capacity. 77% perforated front/rear doors, EIA-310D rails,
-      split rear doors, tool-less mounting, 3-year warranty.
-      Vertiv may supply from demo floor stock — confirm before ordering.
-
-  - assembly: rack-utilities
-    part: Rack PDU (Metered)
-    pn: VP8830
-    vendor: Vertiv (Geist)
-    url: https://www.vertiv.com/en-us/products-catalog/critical-power/power-distribution/vertiv-monitored-rack-pdu/
-    unit_cost_usd: 510
-    lead_time_weeks: 1
-    status: planned
-    notes: >
-      Vertiv Geist VP8830: Monitored rack PDU, 20A / 120V, 24x NEMA 5-20R,
-      1.9 kW max. 0U vertical mount. Unit-level current monitoring with
-      high-visibility LED display, dual Ethernet ports, SNMP/web interface.
-      Upgradeable firmware. 5-year warranty (if registered within 120 days).
-      NEMA L5-20P twist-lock input, 10 ft cord.
-      Useful for tracking load budget during demo — compressor alone is
-      ~12.5A on 120V, need to watch headroom for instruments.
-      Upgrade option: VP8930 (switched) adds per-outlet on/off and remote
-      reboot capability (~$877).
+overrides: []
+  # Rack and PDU now use Vertiv parts (VR3100, VP8830) in the base BOM.
+  # Only add overrides here for Vertiv-site-specific differences.
 
 additions:
   - assembly: rack-utilities

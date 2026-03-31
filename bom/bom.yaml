@@ -150,9 +150,9 @@ assemblies:
       need aluminum/copper). Target sample space >= Ø80 x 120 mm.
     items:
       - part: "Vacuum Vessel Body (CF Nipple or 6-Way Cross)"
-        pn: null
-        vendor: Kurt Lesker / MDC / Nor-Cal
-        url: https://www.lesker.com/newweb/flanges/fittings_cf_nipples.cfm
+        pn: FN-0800
+        vendor: Kurt Lesker
+        url: https://www.lesker.com/newweb/flanges/fittings_cf_nipples.cfm?pgid=full
         qty: 1
         unit_cost_usd: 1500
         lead_time_weeks: 1
@@ -173,9 +173,9 @@ assemblies:
           only matters for the cold internals (shield, stage).
 
       - part: "Top Plate (Multiport Cluster Flange or Bored Blank)"
-        pn: null
-        vendor: Kurt Lesker / MDC
-        url: https://www.lesker.com/newweb/flanges/multiport-cluster-flanges.cfm
+        pn: F0800X000N
+        vendor: Kurt Lesker
+        url: https://www.lesker.com/flanges/flanges-cf-304ss/part/f0800x000n
         qty: 1
         unit_cost_usd: 800
         lead_time_weeks: 2
@@ -201,14 +201,16 @@ assemblies:
           into the top plate. RDK-101D CF option avoids this.
 
       - part: "Radiation Shield (40K) — Custom Machined Aluminum"
-        pn: null
+        pn: CUSTOM
         vendor: "Local machine shop / Protolabs / Xometry"
+        stock_url: https://www.onlinemetals.com/en/buy/aluminum/4-od-x-0-125-wall-x-3-75-id-aluminum-round-tube-6061-t6-extruded/pid/4741
         qty: 1
         unit_cost_usd: 800
         lead_time_weeks: 2
         stage: "40K"
         status: planned
         notes: >
+          CUSTOM MACHINED — raw stock, not a catalog part.
           6061-T6 aluminum cylinder + end caps, thermally anchored to
           RDK-101D 1st stage via OFHC copper thermal strap. Simple turned
           part — any CNC shop can make this. Target dimensions: ~Ø100 mm OD
@@ -218,32 +220,40 @@ assemblies:
           Gold-plated or polished interior for low emissivity (optional).
           Design once cold head outline drawing dimensions are confirmed.
           Protolabs/Xometry for fast-turn; local shop for best price.
+          RAW STOCK: 6061-T6 round tube, 4" OD × 1/8" wall (~$41/pc,
+          Online Metals pid/4741). End caps from 6061 plate or disc.
 
       - part: "Sample Stage (4K) — Custom Machined Copper"
-        pn: null
+        pn: CUSTOM
         vendor: "Local machine shop"
+        stock_url: https://shop.southerncopper.com/products/c10100-oxygen-free-copper-round-bar
         qty: 1
         unit_cost_usd: 400
         lead_time_weeks: 2
         stage: "4K"
         status: planned
         notes: >
+          CUSTOM MACHINED — raw stock, not a catalog part.
           OFHC copper plate/block, gold-plated. Provides thermal mass and
           mounting surface for DUT PCB carrier. Connects to 2nd stage cold
           finger THROUGH the alumina isolation disk (see below). Tapped
           holes for PCB standoffs and Pb foil shield bracket. Simple part.
           Target: ~Ø50 mm × 20 mm thick, with M3/M4 tapped holes.
+          RAW STOCK: C10100 OFHC copper 2" round bar ($231 for 12 ft,
+          Southern Copper). Only need ~1" length — CBA machine shop
+          likely has scrap C101 on hand.
 
       - part: "Cryostat Mounting Frame (Aluminum Sheet)"
-        pn: null
+        pn: CUSTOM
         vendor: "Local sheet metal shop / SendCutSend / Xometry"
-        url: https://sendcutsend.com
+        url: https://sendcutsend.com/materials/6061-aluminum/
         qty: 1
         unit_cost_usd: 300
         lead_time_weeks: 2
         stage: "300K"
         status: planned
         notes: >
+          CUSTOM FABRICATED — raw stock, not a catalog part.
           6061-T6 aluminum plate, 6mm (1/4") thick, laser cut and bent.
           Rectangular plate (~525 x 1040 mm) with center cutout for DN320CF
           vessel flange (Ø328mm hole with 40mm lip). Four bent mounting tabs
@@ -257,25 +267,26 @@ assemblies:
           depending on complexity). Local shop for production.
 
       - part: "Alumina Electrical Isolation Disk (4K)"
-        pn: null
-        vendor: CoorsTek / McMaster-Carr
-        url: https://www.mcmaster.com
+        pn: "65631"
+        vendor: CoorsTek
+        url: https://www.amazon.com/CoorsTek-High-Alumina-Disc/dp/B00B2PKVTC
         qty: 1
         unit_cost_usd: 30
         lead_time_weeks: 1
         stage: "4K"
         status: planned
         notes: >
-          Polycrystalline alumina (Al₂O₃) disk, 25–30 mm diameter, 1–2 mm
-          thick, polished both faces. Inserted between the 2nd-stage cold
-          finger and the copper backplane/sample stage. Breaks the galvanic
-          path between the cryocooler structure (earth-grounded through
-          compressor) and the AQFP circuit ground (isolated measurement
-          domain). Thermal conductivity 10–30 W/m·K at 4 K — adequate
-          since indium foil interface resistance dominates. Use 0.1 mm
-          indium foil on both faces with high clamping force. Expected
-          temperature rise: fraction of a kelvin. Off-the-shelf from
-          CoorsTek, McMaster-Carr, or ceramic suppliers. See ADR-004 and
+          CoorsTek 65631: AD-998 high alumina (99.8% Al₂O₃) disc, 25 mm
+          OD, 2 mm thick. Available on Amazon (~$15-20). Inserted between
+          the 2nd-stage cold finger and the copper backplane/sample stage.
+          Breaks the galvanic path between the cryocooler structure
+          (earth-grounded through compressor) and the AQFP circuit ground
+          (isolated measurement domain). Thermal conductivity 10–30 W/m·K
+          at 4 K — adequate since indium foil interface resistance
+          dominates. Use 0.1 mm indium foil on both faces with high
+          clamping force. Expected temperature rise: fraction of a kelvin.
+          Alternative: Valley Design polished 99.6% alumina substrate
+          (custom sizes, 1 mm thick option). See ADR-004 and
           docs/ground_isolation_memo.docx for full rationale.
 
   # ============================================================
@@ -287,10 +298,10 @@ assemblies:
       from multiple vendors — no single-source risk.
     items:
       - part: "Vacuum Pumping: Turbo Station (Pfeiffer HiCube 80 Eco)"
-        pn: HiCube 80 Eco
+        pn: PM015888-T
         vendor: Pfeiffer Vacuum
-        url: https://www.pfeiffer-vacuum.com/global/en/products/pumping-stations/turbo-pumping-stations
-        order_url: https://www.idealvac.com/en-us/HiCube-80-ECO/pl/5-44-229-1658
+        url: https://www.pfeiffer-vacuum.com/en/products/vacuum-generation/pumping-stations/turbo-pumping-stations/hicube-eco/20016/hicube-80-eco-dn-40-iso-kf-mvp-015-2
+        order_url: https://www.idealvac.com/en-us/Pfeiffer-HiCube-80-Eco-Benchtop-Turbomolecular-Pump-Station-KF40-MVP-015-2-Diaphragm-PN:-PM-015-888-AT/pp/P107317
         qty: 1
         unit_cost_usd: 7900
         lead_time_weeks: 1
@@ -325,7 +336,7 @@ assemblies:
           higher starting pressure. Saves ~$2k vs HiCube.
 
       - part: Vacuum Gauge (Convection Pirani)
-        pn: CVM211
+        pn: CVM211GAL
         vendor: InstruTech
         url: https://www.instrutechinc.com/products/convection-and-pirani-capacitance-vacuum-gauges/cvm211-stinger-convection
         order_url: https://highvacdepot.com/product/instrutech-stinger-convection-gauge-series-211/
@@ -340,21 +351,23 @@ assemblies:
           no cold cathode needed for operation.
 
       - part: Electrical Feedthroughs (DC, Multi-pin)
-        pn: null
-        vendor: MDC Vacuum / Kurt Lesker
-        url: https://www.lesker.com/newweb/feedthroughs/feedthroughs_tab_dsub.cfm
+        pn: IFDGG251056
+        vendor: Kurt Lesker
+        url: https://www.lesker.com/feedthroughs/instrument-feedthroughs-mpdt-subd/part/ifdgg251056
         qty: 2
         unit_cost_usd: 500
         lead_time_weeks: 2
         stage: "300K"
         status: planned
         notes: >
-          D-sub 25-pin hermetic feedthroughs on CF flanges. 2 units gives 50 pins —
-          sufficient for DC bias (16 wires) + temp sensors (8 wires) + spares.
-          Ceramic-to-metal seals are inherently isolated from the flange body,
-          preserving the ground isolation architecture — no coax shield or
-          cable braid should connect to the flange housing. Stock items from
-          MDC or Lesker.
+          Kurt Lesker IFDGG251056: D-sub 25-pin hermetic feedthrough on
+          DN63CF (4.50" OD) flange, $510 each. 500 VDC, 5A/pin, glass-
+          ceramic insulator, gold-plated NiFe conductors. 2 units gives
+          50 pins — sufficient for DC bias (16 wires) + temp sensors
+          (8 wires) + spares. Ceramic-to-metal seals are inherently
+          isolated from the flange body, preserving the ground isolation
+          architecture — no coax shield or cable braid should connect to
+          the flange housing.
 
       - part: RF/Coax Feedthroughs (SMA)
         pn: null
@@ -407,19 +420,21 @@ assemblies:
           quick stock. Mouser Proterial catalog: https://www.mouser.com/manufacturer/proterial/
 
       - part: Lead Foil (Superconducting Shield)
-        pn: null
-        vendor: McMaster-Carr / Alfa Aesar
-        url: https://www.mcmaster.com
+        pn: 012051.GH
+        vendor: Thermo Scientific (Alfa Aesar Puratronic)
+        url: https://www.thermofisher.com/order/catalog/product/012051.GH
         qty: 1
         unit_cost_usd: 30
         lead_time_weeks: 1
         stage: "4K"
         status: planned
         notes: >
-          Pb foil, 0.1–0.25 mm thick, 99.9% purity, ~150 x 150 mm.
+          Pb foil, 0.1 mm thick, 99.998% purity (Puratronic), 100 x 100 mm.
           Wrapped around DUT stage at 4 K. Tc = 7.2 K — standard purity
-          Pb goes superconducting the same as 5N. McMaster or any metal
-          supplier. 5N purity only needed for ultra-sensitive physics.
+          Pb goes superconducting the same as 5N. Alfa Aesar 012051.GH
+          ($354 for 100x100mm) or 012051.FI ($136 for 50x50mm). May need
+          2 sheets to cover DUT stage. 5N purity only needed for ultra-
+          sensitive physics.
 
   # ============================================================
   # THERMAL MANAGEMENT & WIRING
@@ -429,9 +444,9 @@ assemblies:
       Heat sinking, thermal intercepts, and signal wiring from 300 K to 4 K.
     items:
       - part: Copper Braid / Thermal Straps (40 K stage)
-        pn: null
+        pn: 69925K41
         vendor: McMaster-Carr
-        url: https://www.mcmaster.com
+        url: https://www.mcmaster.com/69925K41
         qty: 2
         unit_cost_usd: 50
         lead_time_weeks: 1
@@ -443,9 +458,9 @@ assemblies:
           precision-characterized straps (TAI, ~$300 ea) are unnecessary.
 
       - part: Copper Braid / Thermal Straps (4 K stage)
-        pn: null
+        pn: 69925K41
         vendor: McMaster-Carr
-        url: https://www.mcmaster.com
+        url: https://www.mcmaster.com/69925K41
         qty: 2
         unit_cost_usd: 50
         lead_time_weeks: 1
@@ -456,18 +471,20 @@ assemblies:
           cold head to sample stage.
 
       - part: Phosphor Bronze Wiring Loom (DC)
-        pn: null
-        vendor: California Fine Wire / MWS Wire
-        url: https://www.calfinewire.com
+        pn: WQL-36-100
+        vendor: Lake Shore Cryotronics
+        url: https://shop.lakeshore.com/temperature-products/cryogenic-accessories/cryogenic-wire/quad-lead.html
         qty: 1
         unit_cost_usd: 50
         lead_time_weeks: 1
         stage: "300K-4K"
         status: planned
         notes: >
-          36 AWG phosphor bronze wire, ~30 m. Twist into pairs/quads as
-          needed. 16 conductors from 300 K to 4 K with heat sinking at
-          40 K. Generic PhBr is the same alloy as Lake Shore branded wire.
+          Lake Shore WQL-36-100: Quad-Lead phosphor bronze, 36 AWG,
+          100 ft (30 m) spool, polyimide insulated, color-coded. 4-wire
+          ribbon format for easy heat sinking. 16 conductors from 300 K
+          to 4 K with heat sinking at 40 K. Also available: WQL-36-25
+          (25 ft) or WQL-36-500 (500 ft).
 
       - part: Coaxial Cables (RF/Clock)
         pn: null
@@ -485,7 +502,7 @@ assemblies:
           cryo coax at a fraction of the cost.
 
       - part: PCB DUT Mount / Chip Carrier
-        pn: null
+        pn: CUSTOM
         vendor: Custom / PCBWay
         url: https://www.pcbway.com
         qty: 2
@@ -494,13 +511,15 @@ assemblies:
         stage: "4K"
         status: planned
         notes: >
-          Custom PCB on copper mount for wirebonded AQFP die. Gold-plated pads,
-          SMA edge-launch connectors for RF. Design once DUT pinout is known.
-          Order 2 for a spare. DUT-to-sample-stage adapter bracket can be
-          3D printed in PLA — easy to iterate as DUT pinout changes.
+          CUSTOM PCB — design once DUT pinout is known.
+          Custom PCB on copper mount for wirebonded AQFP die. Gold-plated
+          pads, SMA edge-launch connectors for RF. Order 2 for a spare.
+          DUT-to-sample-stage adapter bracket can be 3D printed in PLA —
+          easy to iterate as DUT pinout changes. Order from PCBWay
+          (pcbway.com) or JLCPCB with gold finish (ENIG).
 
       - part: MLI Blankets (Multi-Layer Insulation)
-        pn: null
+        pn: DIY
         vendor: "DIY or Dunmore / FrakoTerm"
         url: https://hydrogen.wsu.edu/2020/06/16/how-to-make-cryogenic-multi-layer-insulation-mli-shields/
         qty: 1
@@ -591,7 +610,7 @@ assemblies:
       are the known standard for SC IV measurements.
     items:
       - part: DC Voltage/Current Source
-        pn: GS200
+        pn: GS210
         vendor: Yokogawa
         url: https://tmi.yokogawa.com/us/solutions/products/generators-sources/programmable-dc-sources/gs200/
         qty: 1
@@ -608,7 +627,7 @@ assemblies:
       - part: Nanovoltmeter
         pn: 2182A
         vendor: Keithley / Tektronix
-        url: https://tek.com/en/products/keithley/low-level-sensitive-and-specialty-instruments/nanovoltmeter-model-2182a
+        url: https://www.tek.com/en/products/keithley/low-level-sensitive-and-specialty-instruments/nanovoltmeter-model-2182a
         qty: 1
         unit_cost_usd: 6700
         lead_time_weeks: 2
@@ -627,27 +646,37 @@ assemblies:
       Physical rack frame, power distribution, and cabling.
     items:
       - part: Equipment Rack (19" Standard)
-        pn: null
-        vendor: Vertiv / APC / Chatsworth
+        pn: VR3100
+        vendor: Vertiv
+        url: https://www.vertiv.com/en-us/products-catalog/facilities-enclosures-and-racks/racks-and-containment/vertiv-vr-rack/
         qty: 1
         unit_cost_usd: 1500
         lead_time_weeks: 1
         stage: "300K"
         status: planned
         notes: >
-          42U open frame or enclosed. Vertiv may supply at their site.
-          Need at minimum: cryostat on top or beside, instruments in rack,
-          compressor on floor beside. Confirm rack height needed.
+          Vertiv VR3100: 42U, 600mm W x 1100mm D, standard 19" rack.
+          3,000 lbs static load capacity. 77% perforated front/rear
+          doors, EIA-310D rails, split rear doors, tool-less mounting,
+          3-year warranty. Vertiv may supply from demo floor stock at
+          their site — confirm before ordering.
 
       - part: Rack PDU (Metered)
-        pn: null
-        vendor: Vertiv / APC
+        pn: VP8830
+        vendor: Vertiv (Geist)
+        url: https://www.vertiv.com/en-us/products-catalog/critical-power/power-distribution/vertiv-monitored-rack-pdu/
         qty: 1
-        unit_cost_usd: 400
+        unit_cost_usd: 510
         lead_time_weeks: 1
         stage: "300K"
         status: planned
-        notes: "Metered PDU, 120 V / 20 A circuit. Vertiv may supply."
+        notes: >
+          Vertiv Geist VP8830: Monitored rack PDU, 20A / 120V, 24x
+          NEMA 5-20R, 1.9 kW max. 0U vertical mount. Unit-level current
+          monitoring with LED display, dual Ethernet, SNMP/web. NEMA
+          L5-20P twist-lock input, 10 ft cord. 5-year warranty.
+          Upgrade option: VP8930 (switched, ~$877) adds per-outlet
+          on/off and remote reboot.
 
       - part: "Isolation Transformer (Readout Electronics)"
         pn: IS500HG
@@ -669,9 +698,9 @@ assemblies:
           shield or ground lug may touch cryostat body or rack chassis.
 
       - part: KF/CF Vacuum Fittings and Hardware
-        pn: null
-        vendor: Kurt Lesker / MDC
-        url: https://www.lesker.com/newweb/flanges/hardware_kf_background.cfm
+        pn: various
+        vendor: Kurt Lesker
+        url: https://www.lesker.com/vacuum-flanges-components.cfm
         qty: 1
         unit_cost_usd: 800
         lead_time_weeks: 1
@@ -684,31 +713,39 @@ assemblies:
           If going semi-custom cryostat route (option B), also need CF-to-KF
           adapters for the vacuum vessel ports.
 
-      - part: Pressure Relief Valve (Burst Disc)
-        pn: null
-        vendor: Kurt Lesker / MDC
-        url: https://www.lesker.com/newweb/valves/
+      - part: Pressure Relief Valve (Spring, KF-25)
+        pn: BMT-PRV-S-KF25
+        vendor: bmotiontech
+        url: https://bmotiontech.com/products/bmotiontech-kf25-flange-pressure-relief-valve-for-vacuum-chamber-improved-version-1-5-psig
         qty: 1
-        unit_cost_usd: 150
+        unit_cost_usd: 60
         lead_time_weeks: 1
         stage: "300K"
         status: planned
         notes: >
-          SAFETY. Spring-loaded relief valve or burst disc on a KF-25 port.
-          Vents if cold head leaks He into vacuum space and pressure rises.
-          Required on any sealed cryostat. Set to ~1.5-2 atm.
+          SAFETY. Spring-loaded SS304 relief valve on KF-25 port, opens
+          at 1.5 psig. Vents if cold head leaks He into vacuum space.
+          Required on any sealed cryostat. Single-piece CNC body,
+          improved version with fewer leak points. $60 — no need for
+          UHV burst disc ($728 Ideal Vacuum P107378) since cryostat
+          uses Viton seals and cryopumping maintains vacuum at 4 K.
+          Alternative source: USA Lab KF25 pressure release valve
+          (Amazon, similar price).
 
       - part: CF Copper Gaskets (Consumable)
-        pn: null
-        vendor: Kurt Lesker / MDC
-        url: https://www.lesker.com/newweb/flanges/hardware_cf_gaskets.cfm
+        pn: GA-0800
+        vendor: Kurt Lesker
+        url: https://www.lesker.com/flanges/hardware-cf-gaskets/part/ga-0800
         qty: 10
         unit_cost_usd: 20
         lead_time_weeks: 1
         stage: "300K"
         status: planned
         notes: >
-          OFHC copper CF gaskets for 8" (DN160) and smaller flanges.
+          Kurt Lesker GA-0800: OFHC copper CF gaskets for 8" (DN160)
+          flanges, 6.743" OD, 6.007" ID, 10/pkg. Also available:
+          VZCUA150 (annealed, 5/pkg) for fragile components. For smaller
+          flanges:
           For permanent joints (bottom plate, feedthrough ports).
           The sample-access joint (top plate to vessel body) should use a
           Viton O-ring groove instead — reusable, ~1e-7 Torr, adequate
@@ -717,22 +754,23 @@ assemblies:
           Viton O-rings are ~$2 each and last dozens of cycles.
 
       - part: Indium Wire (Thermal Interface)
-        pn: null
-        vendor: Indium Corporation / Alfa Aesar
-        url: https://www.indium.com/products/wire/
+        pn: 02-39-001
+        vendor: CMR Direct
+        url: https://www.cmr-direct.com/en/indium-wire
         qty: 1
         unit_cost_usd: 80
         lead_time_weeks: 1
         stage: "4K/40K"
         status: planned
         notes: >
-          0.5-1.0 mm diameter indium wire, ~1 m. Crushed between bolted
-          cryo joints for thermal contact: cold head → thermal strap,
-          thermal strap → radiation shield, cold finger → sample stage.
-          Standard cryo practice. Also useful: Apiezon N grease as backup.
+          CMR Direct 02-39-001: 1.0 mm diameter, 10 m spool, 99.99%
+          purity, $433. Crushed between bolted cryo joints for thermal
+          contact: cold head → thermal strap, thermal strap → radiation
+          shield, cold finger → sample stage. Standard cryo practice.
+          Also useful: Apiezon N grease as backup.
 
       - part: Wire Heat Sinking Supplies
-        pn: null
+        pn: various
         vendor: Lake Shore / CMR Direct
         url: https://www.cmr-direct.com/
         qty: 1
@@ -749,7 +787,7 @@ assemblies:
           Print custom geometry to match wire count and routing.
 
       - part: Miscellaneous Hardware
-        pn: null
+        pn: various
         vendor: McMaster-Carr / Thorlabs
         url: https://www.mcmaster.com
         qty: 1
