@@ -1,0 +1,214 @@
+# Thermal Budget Inputs for Cryo-Rack Demo System
+#
+# All inputs parameterized here -- no hardcoded numbers in thermal_budget.py.
+# Reference: docs/thermal-budget.md, decisions/002-cryocooler-selection.md
+#
+# Thermal conductivity integrals are cumulative from 0 K to T (units: W/m).
+# To get the integral from T_cold to T_hot:
+#   integral = table[T_hot] - table[T_cold]
+# Source: NIST Cryogenic Materials Database, Woodcraft (2005), Ekin (2006).
+#
+# Convention: all lengths in meters, areas in m^2, temperatures in kelvin,
+# thermal conductivities in W/(m*K), conductivity integrals in W/m.
+
+# --- Cryocooler capacity ---
+cryocooler:
+  model: "Sumitomo RDK-101D + CNA-11RC"
+  stages:
+    - name: "1st stage"
+      temperature_k: 45.0
+      capacity_w: 3.0        # ~3 W at 45 K with CNA-11RC at 60 Hz
+    - name: "2nd stage"
+      temperature_k: 4.2
+      capacity_w: 0.1        # 100 mW at 4.2 K (CNA-11RC footnote)
+
+# --- Thermal stages ---
+# Heat loads are computed for two intervals:
+#   300 K -> 1st stage (45 K)
+#   1st stage (45 K) -> 2nd stage (4.2 K)
+temperatures:
+  room: 300.0
+  first_stage: 45.0
+  second_stage: 4.2
+
+# --- Material thermal conductivity integrals (0 K to T), W/m ---
+# Q_conduction = (A / L) * (integral[T_hot] - integral[T_cold])
+#
+# These are polynomial or tabulated integrals of k(T) from 0 to T.
+# Values below are representative for the temperature points we need.
+materials:
+  phosphor_bronze:
+    description: "Phosphor bronze (CuSn8, C52100), 36 AWG DC wiring"
+    # Thermal conductivity integral from 0 K to T (W/m)
+    # Source: NIST/Woodcraft. PhBr has k ~ 48 W/(m*K) at 300K, ~19 at 40K, ~0.5 at 4K
+    conductivity_integral:
+      4: 1.0           # 0->4 K
+      45: 470.0        # 0->45 K
+      300: 6200.0      # 0->300 K
+
+  ss304:
+    description: "Stainless steel 304, coax outer/inner conductors and mech supports"
+    # k ~ 15 W/(m*K) at 300K, ~8 at 40K, ~0.3 at 4K
+    # Integral 4->300 K ~ 3060 W/m (matches ~1.6 W*cm/cm^2 = 160 W*cm/m^2
+    #   converting: 3060 W/m ~ 30.6 W*cm/cm^2? No:
+    #   Literature: SS304 integral 4K->300K = ~30 W*cm/cm (= 3000 W*m/m^2 = 3000 W/m)
+    #   Or equivalently 1.6 W*cm/cm^2 means per unit (A/L) in cgs.
+    #   Let's be precise: the thermal conductivity integral
+    #     integral from 4K to 300K of k(T) dT ~ 3000 W/m for SS304.
+    conductivity_integral:
+      4: 0.5           # 0->4 K
+      45: 185.0        # 0->45 K
+      300: 3000.0      # 0->300 K
+
+  ofhc_copper:
+    description: "OFHC copper (RRR~100), thermal straps and sample stage"
+    # k ~ 400 W/(m*K) at 300K, much higher at low T, peaks ~20 K
+    conductivity_integral:
+      4: 600.0         # 0->4 K
+      45: 15000.0      # 0->45 K
+      300: 120000.0    # 0->300 K
+
+  alumina:
+    description: "Alumina (Al2O3 99.5% polycrystalline), ground isolation disk"
+    # Polycrystalline alumina (NOT single-crystal sapphire):
+    # k ~ 30 W/(m*K) at 300K, peaks ~50 W/(m*K) near 30-40K, drops sharply below 10K
+    # Source: Woodcraft (2005), Touloukian Vol 2
+    conductivity_integral:
+      4: 2.0           # 0->4 K (very low; k ~ 0.5 W/(m*K) at 4K)
+      45: 500.0        # 0->45 K
+      300: 8000.0      # 0->300 K
+
+# --- Wiring: DC bias lines ---
+dc_wiring:
+  description: "Phosphor bronze 36 AWG twisted pairs, heat-sunk at 40K"
+  material: phosphor_bronze
+  count: 16                     # number of individual conductors
+  wire_cross_section_m2: 1.27e-8  # 36 AWG = 0.0127 mm^2
+  # Two segments: 300K->45K and 45K->4.2K
+  segments:
+    - name: "300K to 1st stage"
+      t_hot_k: 300.0
+      t_cold_k: 45.0
+      length_m: 0.5
+    - name: "1st stage to 2nd stage"
+      t_hot_k: 45.0
+      t_cold_k: 4.2
+      length_m: 0.3
+
+# --- Wiring: RF coaxial cables ---
+rf_coax:
+  description: "SS304 semi-rigid 0.086\" coax, heat-sunk at 40K"
+  material: ss304
+  count: 4                       # number of coax lines
+  # Total metal cross-section per cable (outer + inner conductor)
+  cable_cross_section_m2: 1.7e-6
+  segments:
+    - name: "300K to 1st stage"
+      t_hot_k: 300.0
+      t_cold_k: 45.0
+      length_m: 0.5
+    - name: "1st stage to 2nd stage"
+      t_hot_k: 45.0
+      t_cold_k: 4.2
+      length_m: 0.3
+
+# --- Radiation ---
+radiation:
+  stefan_boltzmann_constant: 5.670374419e-8   # W/(m^2*K^4)
+
+  loads:
+    - name: "300K -> 1st stage (with MLI)"
+      description: "Radiation from vacuum vessel wall to radiation shield, 10-layer MLI"
+      t_hot_k: 300.0
+      t_cold_k: 45.0
+      # MLI effective emissivity: ~1.5 W/m^2 total flux at 300K->40K for 10-layer
+      # Instead of using epsilon with SB law, model MLI heat flux directly.
+      use_mli: true
+      mli_heat_flux_w_per_m2: 1.5    # Typical 10-layer aluminized mylar
+      area_m2: 0.063                   # Radiation shield: ~100mm dia x 150mm tall
+
+    - name: "40K -> 4K (bare surface)"
+      description: "Radiation from 40K radiation shield to 4K sample stage"
+      t_hot_k: 45.0
+      t_cold_k: 4.2
+      use_mli: false
+      emissivity: 0.1          # Unpolished mixed surfaces
+      area_m2: 0.005           # Sample stage: ~50mm dia x 20mm, small exposed area
+      # Note: for small object inside larger enclosure, use object area
+
+# --- Mechanical supports ---
+# Cryogenic support structures use thin-wall SS tubing or G10 standoffs
+# to minimize conduction while providing structural rigidity.
+# Typical: thin-wall SS tubes (~0.25mm wall, 6mm OD) or G10 rods.
+mechanical_supports:
+  description: "SS304 thin-wall tube standoffs"
+  material: ss304
+  items:
+    - name: "4K support tubes (40K -> 4K)"
+      count: 3
+      # Thin-wall SS tube: 6mm OD, 0.25mm wall -> A = pi*d*t = pi*6e-3*0.25e-3 = 4.7e-6 m^2
+      cross_section_m2: 4.7e-6
+      length_m: 0.15              # 150 mm standoff (longer = less conduction)
+      t_hot_k: 45.0
+      t_cold_k: 4.2
+
+    - name: "1st stage support tubes (300K -> 40K)"
+      count: 3
+      # Thin-wall SS tube: 8mm OD, 0.5mm wall -> A = pi*8e-3*0.5e-3 = 1.26e-5 m^2
+      cross_section_m2: 1.26e-5
+      length_m: 0.20              # 200 mm standoff
+      t_hot_k: 300.0
+      t_cold_k: 45.0
+
+# --- Ground isolation disk ---
+# The alumina disk sits between the 2nd-stage cold finger and the Cu backplane.
+# BOTH sides are at approximately 4K. The disk is NOT a thermal path between
+# stages; it is an electrical isolator within the 4K stage.
+#
+# Per ADR-004: "Alumina disk adds a fraction of a kelvin to the base temperature."
+# The heat flowing THROUGH the disk is determined by the total heat load on the
+# backplane (DUT + wiring + radiation arriving at sample stage). The disk itself
+# is not a heat SOURCE — it's a thermal resistance in series.
+#
+# We model the disk's contribution as the additional thermal resistance it adds
+# to the cooling path, which raises the backplane temperature slightly but does
+# NOT add to the total cryocooler load (the heat still arrives at the cold finger).
+# Therefore: disk heat load on the cryocooler = 0 (it's in the thermal path,
+# not a heat source).
+#
+# For budgeting purposes we include a token entry to document this component.
+ground_isolation:
+  description: "Alumina disk for galvanic isolation (ADR-004) — not a heat source"
+  material: alumina
+  diameter_m: 0.025         # 25mm disk
+  thickness_m: 0.003        # 3mm thick
+  # The disk is in the 4K thermal path — it does not span a temperature stage.
+  # Model as 4.2K on both sides (delta-T is a fraction of a kelvin from contact
+  # resistance; this is a series thermal impedance, not an additional heat load).
+  t_hot_k: 4.2
+  t_cold_k: 4.2
+  notes: >
+    The alumina disk is sandwiched between indium foil gaskets.
+    Thermal path: cold finger -> indium -> alumina -> indium -> Cu backplane.
+    It adds ~0.1-0.3 K to base temperature but does not add heat load to
+    the cryocooler — the heat flowing through it is already counted in other
+    subsystems (DUT, wiring conduction from 40K->4K, radiation).
+
+# --- Optical I/O (Phase 2 placeholder) ---
+optical_io:
+  description: "Fiber-coupled optical I/O, VCSEL at RT to photodiode at 4K"
+  enabled: false              # Not in first build; set true when Phase 2
+  # Heat loads from optical I/O:
+  fiber_count: 4
+  # Fiber conduction is negligible (silica glass, tiny cross-section)
+  # Main heat load: absorbed optical power at 4K photodiode
+  optical_power_per_fiber_w: 1.0e-3    # 1 mW coupled per fiber (typical VCSEL)
+  absorption_fraction: 0.5              # 50% absorbed as heat at photodiode
+  # Also: fiber jacket conduction, fiber thermal clamp at 40K
+  fiber_conduction_per_fiber_w: 0.0     # Negligible for bare silica fiber
+
+# --- DUT dissipation ---
+dut:
+  description: "AQFP die power dissipation"
+  power_w: 1.0e-6            # ~1 uW typical; nW to low-uW range
+  notes: "Negligible compared to other loads"
