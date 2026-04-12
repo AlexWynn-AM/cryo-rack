@@ -68,6 +68,22 @@ materials:
       45: 15000.0      # 0->45 K
       300: 120000.0    # 0->300 K
 
+  g10_fiberglass:
+    description: "G10/FR4 fiberglass composite, cryogenic mechanical supports"
+    # G10 (NEMA grade) is the standard low-conductivity structural material for
+    # cryogenic support standoffs.  Much lower thermal conductivity than SS304:
+    #   k ~ 0.7 W/(m*K) at 300K, ~0.25 at 40K, ~0.05 at 4K (normal to cloth)
+    # Source: NIST Cryogenic Materials Database; Woodcraft & Sherrill (2004);
+    #   Ekin (2006) "Experimental Techniques for Low-Temperature Measurements"
+    # Note: values are for heat flow NORMAL to the glass-cloth layers.
+    # Parallel-to-cloth conductivity is ~2x higher.
+    # Alternative for non-load-bearing parts: PLA or PLA wrapped in fiberglass
+    # (even lower conductivity, but limited structural strength).
+    conductivity_integral:
+      4: 0.04          # 0->4 K
+      45: 5.5           # 0->45 K
+      300: 153.0         # 0->300 K  (~10x lower than SS304's ~3000 W/m)
+
   alumina:
     description: "Alumina (Al2O3 99.5% polycrystalline), ground isolation disk"
     # Polycrystalline alumina (NOT single-crystal sapphire):
@@ -137,25 +153,27 @@ radiation:
       # Note: for small object inside larger enclosure, use object area
 
 # --- Mechanical supports ---
-# Cryogenic support structures use thin-wall SS tubing or G10 standoffs
-# to minimize conduction while providing structural rigidity.
-# Typical: thin-wall SS tubes (~0.25mm wall, 6mm OD) or G10 rods.
+# G10 fiberglass composite standoffs are the standard structural material
+# for cryogenic support structures.  ~10x lower thermal conductivity than
+# SS304, with adequate compressive strength for static loads.
+# Alternative: PLA or PLA/fiberglass wrap for non-load-bearing spacers.
 mechanical_supports:
-  description: "SS304 thin-wall tube standoffs"
-  material: ss304
+  description: "G10 fiberglass composite standoffs"
+  material: g10_fiberglass
   items:
-    - name: "4K support tubes (40K -> 4K)"
+    - name: "4K support rods (40K -> 4K)"
       count: 3
-      # Thin-wall SS tube: 6mm OD, 0.25mm wall -> A = pi*d*t = pi*6e-3*0.25e-3 = 4.7e-6 m^2
-      cross_section_m2: 4.7e-6
+      # G10 rod: 6mm OD, solid -> A = pi*(3e-3)^2 = 2.83e-5 m^2
+      # (solid rod acceptable because G10 conductivity is so low)
+      cross_section_m2: 2.83e-5
       length_m: 0.15              # 150 mm standoff (longer = less conduction)
       t_hot_k: 45.0
       t_cold_k: 4.2
 
-    - name: "1st stage support tubes (300K -> 40K)"
+    - name: "1st stage support rods (300K -> 40K)"
       count: 3
-      # Thin-wall SS tube: 8mm OD, 0.5mm wall -> A = pi*8e-3*0.5e-3 = 1.26e-5 m^2
-      cross_section_m2: 1.26e-5
+      # G10 rod: 8mm OD, solid -> A = pi*(4e-3)^2 = 5.03e-5 m^2
+      cross_section_m2: 5.03e-5
       length_m: 0.20              # 200 mm standoff
       t_hot_k: 300.0
       t_cold_k: 45.0

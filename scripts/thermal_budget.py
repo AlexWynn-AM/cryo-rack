@@ -262,7 +262,7 @@ def compute_budget(inputs: dict[str, Any]) -> ThermalBudget:
             stage=stage,
             load_w=q_total,
             details=(
-                f"{item['count']}x SS304, "
+                f"{item['count']}x {mech['material']}, "
                 f"A={item['cross_section_m2']:.2e} m^2, "
                 f"L={item['length_m']} m, "
                 f"{item['t_hot_k']:.0f}K->{item['t_cold_k']:.0f}K"
