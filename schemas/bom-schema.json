@@ -1,0 +1,246 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://adiabaticmachines.com/schemas/bom-schema.json",
+  "title": "Cryo-Rack BOM Schema",
+  "description": "Schema for cryo-rack bill of materials YAML files (base and site-override).",
+  "oneOf": [
+    { "$ref": "#/$defs/baseBom" },
+    { "$ref": "#/$defs/siteOverrideBom" }
+  ],
+  "$defs": {
+    "bomItem": {
+      "type": "object",
+      "required": ["part", "qty", "status"],
+      "properties": {
+        "part": {
+          "type": "string",
+          "description": "Human-readable part description."
+        },
+        "pn": {
+          "description": "Part number. Null if not yet selected.",
+          "oneOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ]
+        },
+        "vendor": {
+          "description": "Vendor or manufacturer name.",
+          "oneOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ]
+        },
+        "url": {
+          "description": "Product page URL.",
+          "oneOf": [
+            { "type": "string", "format": "uri" },
+            { "type": "null" }
+          ]
+        },
+        "order_url": {
+          "description": "Direct order URL (if different from product page).",
+          "oneOf": [
+            { "type": "string", "format": "uri" },
+            { "type": "null" }
+          ]
+        },
+        "stock_url": {
+          "description": "Raw stock material URL (for custom parts).",
+          "oneOf": [
+            { "type": "string", "format": "uri" },
+            { "type": "null" }
+          ]
+        },
+        "qty": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Quantity needed. 0 = reference/alternative, not ordered."
+        },
+        "unit_cost_usd": {
+          "description": "Unit cost in USD.",
+          "oneOf": [
+            { "type": "number", "minimum": 0 },
+            { "type": "null" }
+          ]
+        },
+        "lead_time_weeks": {
+          "description": "Lead time in weeks from order to delivery.",
+          "oneOf": [
+            { "type": "number", "minimum": 0 },
+            { "type": "null" }
+          ]
+        },
+        "stage": {
+          "type": "string",
+          "description": "Temperature stage: 4K, 40K, 300K, 4K/40K, 300K-4K, etc."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["planned", "quoting", "quoted", "ordered", "received"],
+          "description": "Procurement status."
+        },
+        "notes": {
+          "description": "Free-form notes.",
+          "oneOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "assembly": {
+      "type": "object",
+      "required": ["name", "items"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Assembly identifier (kebab-case)."
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable assembly description."
+        },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/bomItem" },
+          "minItems": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "siteOverrideItem": {
+      "type": "object",
+      "required": ["assembly", "part"],
+      "properties": {
+        "assembly": {
+          "type": "string",
+          "description": "Assembly name this override applies to."
+        },
+        "part": {
+          "type": "string",
+          "description": "Part name to override or add."
+        },
+        "pn": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ]
+        },
+        "vendor": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ]
+        },
+        "url": {
+          "oneOf": [
+            { "type": "string", "format": "uri" },
+            { "type": "null" }
+          ]
+        },
+        "qty": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unit_cost_usd": {
+          "oneOf": [
+            { "type": "number", "minimum": 0 },
+            { "type": "null" }
+          ]
+        },
+        "lead_time_weeks": {
+          "oneOf": [
+            { "type": "number", "minimum": 0 },
+            { "type": "null" }
+          ]
+        },
+        "stage": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["planned", "quoting", "quoted", "ordered", "received"]
+        },
+        "notes": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "baseBom": {
+      "type": "object",
+      "required": ["project", "revision", "date", "assemblies"],
+      "properties": {
+        "project": {
+          "type": "string"
+        },
+        "revision": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "description": "ISO 8601 date string."
+        },
+        "target_build_date": {
+          "type": "string",
+          "description": "ISO 8601 date string for target build."
+        },
+        "assemblies": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/assembly" },
+          "minItems": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "siteOverrideBom": {
+      "type": "object",
+      "required": ["site", "base", "revision", "date"],
+      "properties": {
+        "site": {
+          "type": "string",
+          "description": "Site identifier (e.g. CBA, Vertiv)."
+        },
+        "base": {
+          "type": "string",
+          "description": "Filename of the base BOM this overrides."
+        },
+        "revision": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "notes": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ]
+        },
+        "overrides": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": { "$ref": "#/$defs/siteOverrideItem" }
+            },
+            { "type": "null" }
+          ]
+        },
+        "additions": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": { "$ref": "#/$defs/siteOverrideItem" }
+            },
+            { "type": "null" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
