@@ -27,9 +27,26 @@ Design and procure a cryogenic demonstration rack using off-the-shelf components
 ## Quick Start
 
 ```bash
-pip install -r scripts/requirements.txt
+pip install -r scripts/requirements.lock
 python scripts/bom_summary.py bom/bom.yaml
 ```
+
+`scripts/requirements.lock` pins the full transitive closure for reproducible
+environments and is what CI installs. `scripts/requirements.txt` lists the
+direct dependencies (also fully pinned with `==`).
+
+### Regenerating the lockfile
+
+When bumping a direct dependency, edit the `==` pin in
+`scripts/requirements.txt`, then regenerate the lockfile with
+[uv](https://github.com/astral-sh/uv):
+
+```bash
+uv pip compile scripts/requirements.txt -o scripts/requirements.lock
+```
+
+`pip-compile` from `pip-tools` is an acceptable substitute. Commit both files
+together so the lockfile stays in sync with the direct deps.
 
 ## BOM Workflow
 
