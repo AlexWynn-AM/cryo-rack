@@ -1,0 +1,81 @@
+{
+  "cryocooler_model": "Sumitomo RDK-101D + CNA-11RC",
+  "stages": {
+    "1st stage": {
+      "capacity_w": 3.0,
+      "total_load_w": 0.24640142199999998,
+      "utilization": 0.08213380733333332,
+      "margin": 0.9178661926666667,
+      "loads": [
+        {
+          "name": "DC wiring: 300K to 1st stage",
+          "subsystem": "wiring_dc",
+          "load_w": 0.002328672,
+          "details": "16x phosphor_bronze 36AWG, A=1.27e-08 m^2, L=0.5 m, 300K->45K"
+        },
+        {
+          "name": "RF coax: 300K to 1st stage",
+          "subsystem": "wiring_rf",
+          "load_w": 0.038284,
+          "details": "4x SS304 0.086\" coax, A=1.70e-06 m^2, L=0.5 m, 300K->45K"
+        },
+        {
+          "name": "Radiation: 300K -> 1st stage (with MLI)",
+          "subsystem": "radiation",
+          "load_w": 0.0945,
+          "details": "MLI flux=1.5 W/m^2, A=0.063 m^2"
+        },
+        {
+          "name": "Mech support: 1st stage support rods (300K -> 40K)",
+          "subsystem": "mechanical",
+          "load_w": 0.11128874999999999,
+          "details": "3x g10_fiberglass, A=5.03e-05 m^2, L=0.2 m, 300K->45K"
+        }
+      ]
+    },
+    "2nd stage": {
+      "capacity_w": 0.1,
+      "total_load_w": 0.0076702563732688606,
+      "utilization": 0.0767025637326886,
+      "margin": 0.9232974362673114,
+      "loads": [
+        {
+          "name": "DC wiring: 1st stage to 2nd stage",
+          "subsystem": "wiring_dc",
+          "load_w": 0.0003161197268292683,
+          "details": "16x phosphor_bronze 36AWG, A=1.27e-08 m^2, L=0.3 m, 45K->4K"
+        },
+        {
+          "name": "RF coax: 1st stage to 2nd stage",
+          "subsystem": "wiring_rf",
+          "load_w": 0.0041616,
+          "details": "4x SS304 0.086\" coax, A=1.70e-06 m^2, L=0.3 m, 45K->4K"
+        },
+        {
+          "name": "Radiation: 40K -> 4K (bare surface)",
+          "subsystem": "radiation",
+          "load_w": 0.00011625157326886033,
+          "details": "eps=0.1, A=0.005 m^2, 45K->4K"
+        },
+        {
+          "name": "Mech support: 4K support rods (40K -> 4K)",
+          "subsystem": "mechanical",
+          "load_w": 0.003075285073170732,
+          "details": "3x g10_fiberglass, A=2.83e-05 m^2, L=0.15 m, 45K->4K"
+        },
+        {
+          "name": "Ground isolation: alumina disk",
+          "subsystem": "ground_isolation",
+          "load_w": 0.0,
+          "details": "Alumina 25mm dia x 3mm thick, 4K->4K"
+        },
+        {
+          "name": "DUT dissipation",
+          "subsystem": "dut",
+          "load_w": 1e-06,
+          "details": "Negligible compared to other loads"
+        }
+      ]
+    }
+  }
+}

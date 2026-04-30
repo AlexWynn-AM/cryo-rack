@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cryo-Rack Build Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<style>
+  :root { --bg: #0d1117; --card: #161b22; --border: #30363d; --text: #c9d1d9; --muted: #8b949e; --green: #3fb950; --amber: #d29922; --red: #f85149; --blue: #58a6ff; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); padding: 24px; max-width: 1200px; margin: 0 auto; }
+  h1 { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+  .subtitle { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+  @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .card h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 16px; }
+  .metric { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
+  .metric .value { font-size: 28px; font-weight: 700; }
+  .metric .label { font-size: 13px; color: var(--muted); }
+  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .bar-label { font-size: 12px; color: var(--muted); min-width: 140px; }
+  .bar-track { flex: 1; height: 20px; background: #21262d; border-radius: 4px; overflow: hidden; position: relative; }
+  .bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s; }
+  .bar-value { font-size: 11px; color: var(--text); position: absolute; right: 6px; top: 2px; }
+  .stage-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .stage-table th { text-align: left; color: var(--muted); font-weight: 500; padding: 6px 8px; border-bottom: 1px solid var(--border); }
+  .stage-table td { padding: 6px 8px; border-bottom: 1px solid #21262d; }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+  .logo { font-size: 12px; color: var(--muted); margin-top: 32px; text-align: center; }
+  .logo a { color: var(--blue); text-decoration: none; }
+</style>
+</head>
+<body>
+<h1>Cryo-Rack Build Dashboard</h1>
+<p class="subtitle">Sumitomo RDK-101D + CNA-11RC cryocooler system</p>
+
+<div class="grid">
+  <!-- Thermal Budget -->
+  <div class="card" id="thermal-card">
+    <h2>Thermal Budget</h2>
+    <div id="thermal-metrics"></div>
+    <div id="thermal-bars"></div>
+  </div>
+
+  <!-- Signal Chain -->
+  <div class="card" id="signal-card">
+    <h2>Signal Chain</h2>
+    <div id="signal-metrics"></div>
+    <canvas id="signal-chart" height="200"></canvas>
+  </div>
+</div>
+
+<!-- Full width BOM card -->
+<div class="card" id="bom-card">
+  <h2>Bill of Materials</h2>
+  <div id="bom-content">
+    <p style="color: var(--muted); font-size: 13px;">BOM data loaded from bom.yaml at build time. Run <code>make dashboard</code> to refresh.</p>
+  </div>
+</div>
+
+<p class="logo"><a href="https://adiabaticmachines.com/site">Adiabatic Machines</a></p>
+
+<script>
+async function loadJSON(url) {
+  const r = await fetch(url);
+  return r.json();
+}
+
+function barColor(util) {
+  if (util < 0.5) return 'var(--green)';
+  if (util < 0.8) return 'var(--amber)';
+  return 'var(--red)';
+}
+
+async function renderThermal() {
+  const data = await loadJSON('data/thermal.json');
+  const card = document.getElementById('thermal-card');
+  const metrics = document.getElementById('thermal-metrics');
+  const bars = document.getElementById('thermal-bars');
+
+  for (const [name, stage] of Object.entries(data.stages)) {
+    const pct = (stage.utilization * 100).toFixed(1);
+    const loadMW = (stage.total_load_w * 1000).toFixed(1);
+    const capMW = (stage.capacity_w * 1000).toFixed(0);
+
+    metrics.innerHTML += `
+      <div class="metric">
+        <span class="value" style="color: ${barColor(stage.utilization)}">${pct}%</span>
+        <span class="label">${name} (${loadMW} / ${capMW} mW)</span>
+      </div>`;
+
+    for (const load of stage.loads) {
+      const loadPct = (load.load_w / stage.capacity_w * 100).toFixed(1);
+      const loadUW = load.load_w < 0.001 ? (load.load_w * 1e6).toFixed(0) + ' uW' : (load.load_w * 1000).toFixed(1) + ' mW';
+      bars.innerHTML += `
+        <div class="bar-row">
+          <span class="bar-label">${load.name.split(':').pop().trim()}</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width: ${Math.min(loadPct, 100)}%; background: ${barColor(stage.utilization)}"></div>
+            <span class="bar-value">${loadUW}</span>
+          </div>
+        </div>`;
+    }
+  }
+}
+
+async function renderSignal() {
+  const data = await loadJSON('data/signal.json');
+  const metrics = document.getElementById('signal-metrics');
+
+  const stages = data.stages;
+  const netSNR = stages[stages.length - 1].snr_dB;
+  metrics.innerHTML = `
+    <div class="metric">
+      <span class="value" style="color: var(--green)">${netSNR.toFixed(1)} dB</span>
+      <span class="label">End-to-end SNR</span>
+    </div>`;
+
+  const ctx = document.getElementById('signal-chart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: stages.map(s => s.component.replace(' (4K)', '').replace(' (300K)', '')),
+      datasets: [{
+        label: 'SNR (dB)',
+        data: stages.map(s => s.snr_dB),
+        backgroundColor: stages.map((s, i) =>
+          i === stages.length - 1 ? '#3fb950' : '#58a6ff'),
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        annotation: {
+          annotations: {
+            threshold: {
+              type: 'line', yMin: 15, yMax: 15,
+              borderColor: '#f85149', borderDash: [4, 4], borderWidth: 1,
+              label: { content: 'Min SNR', display: true, color: '#f85149', font: { size: 10 } }
+            }
+          }
+        }
+      },
+      scales: {
+        x: { ticks: { color: '#8b949e', font: { size: 10 } }, grid: { display: false } },
+        y: { ticks: { color: '#8b949e' }, grid: { color: '#21262d' },
+             title: { display: true, text: 'SNR (dB)', color: '#8b949e' } }
+      }
+    }
+  });
+}
+
+renderThermal();
+renderSignal();
+</script>
+</body>
+</html>

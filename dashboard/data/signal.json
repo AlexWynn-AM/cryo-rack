@@ -1,0 +1,74 @@
+{
+  "stages": [
+    {
+      "component": "AQFP Output (4K)",
+      "amplitude_A": 1e-05,
+      "noise_A": 4.816108719703077e-07,
+      "snr_dB": 26.346074355959036,
+      "bandwidth_Hz": 5000000000.0,
+      "temperature_K": 4.2,
+      "impedance_ohm": 5.0
+    },
+    {
+      "component": "Wirebond",
+      "amplitude_A": 9.993376753403392e-06,
+      "noise_A": 4.813046062180203e-07,
+      "snr_dB": 26.34584485481534,
+      "bandwidth_Hz": 398151062.9970315,
+      "temperature_K": 4.2,
+      "impedance_ohm": 5.0
+    },
+    {
+      "component": "PCB Trace (4K)",
+      "amplitude_A": 5.027081573400617e-06,
+      "noise_A": 2.421164041214307e-07,
+      "snr_dB": 26.34583434565384,
+      "bandwidth_Hz": 398151062.9970315,
+      "temperature_K": 4.2,
+      "impedance_ohm": 50.0
+    },
+    {
+      "component": "Isolation Transformer",
+      "amplitude_A": 4.508577483578134e-06,
+      "noise_A": 2.1760297079058979e-07,
+      "snr_dB": 26.327494351510676,
+      "bandwidth_Hz": 398151062.9970315,
+      "temperature_K": 4.2,
+      "impedance_ohm": 50.0
+    },
+    {
+      "component": "Cryo Feedthrough (4K->300K)",
+      "amplitude_A": 4.256371609949756e-06,
+      "noise_A": 2.244176489169772e-07,
+      "snr_dB": 25.55965059109171,
+      "bandwidth_Hz": 398151062.9970315,
+      "temperature_K": 300.0,
+      "impedance_ohm": 50.0
+    },
+    {
+      "component": "Coax Cable (300K)",
+      "amplitude_A": 4.159927495001652e-06,
+      "noise_A": 2.330129787631724e-07,
+      "snr_dB": 25.034112988276384,
+      "bandwidth_Hz": 398151062.9970315,
+      "temperature_K": 300.0,
+      "impedance_ohm": 50.0
+    },
+    {
+      "component": "Room Temp Amplifier",
+      "amplitude_A": 0.0041599274950016515,
+      "noise_A": 0.0003590092518024073,
+      "snr_dB": 21.279602411028527,
+      "bandwidth_Hz": 398151062.9970315,
+      "temperature_K": 300.0,
+      "impedance_ohm": 50.0
+    }
+  ],
+  "summary": {
+    "cascaded_noise_figure_dB": 3.3741353154554075,
+    "bandwidth_bottleneck": "Room Temp Amplifier",
+    "bandwidth_bottleneck_Hz": 1000000000.0,
+    "minimum_detectable_signal_A": 2.729102702228867e-06,
+    "final_snr_dB": 21.279602411028527
+  }
+}
