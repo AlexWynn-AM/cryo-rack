@@ -239,7 +239,7 @@ vacuum before cooldown drives off most volatiles. Do not exceed 60°C
 
 ## Ground Isolation
 
-See [ADR-004](../decisions/004-ground-isolation.md) and `docs/ground_isolation_memo.docx`.
+See ADR-004 (`docs/decisions/004-ground-isolation.md`) and `docs/ground_isolation_memo.docx`.
 
 The cold head body is galvanically continuous with the compressor chassis
 (through stainless flex lines) and therefore to AC mains earth. The GM
