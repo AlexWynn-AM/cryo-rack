@@ -2,9 +2,8 @@
 """
 Signal Chain Waterfall Plot
 
-Renders a brand-compliant (Adiabatic Machines BRAND.md) waterfall chart
-of signal amplitude and noise floor at each stage of the signal chain
-from `scripts/signal_chain.py`.
+Renders a waterfall chart of signal amplitude and noise floor at each
+stage of the signal chain from `scripts/signal_chain.py`.
 
 Usage:
     python3 scripts/signal_chain_plot.py
@@ -15,13 +14,9 @@ Outputs a PNG to `docs/assets/signal_chain_waterfall.png` by default.
 The figure is committed to the repo as a fixture for documentation and
 dashboard discoverability.
 
-Brand compliance (BRAND.md):
-  - White background, Geist font (falls back to sans-serif)
-  - #4d65ff accent for signal trace
-  - #fb5353 for noise floor
-  - 16:9 aspect ratio, 150 DPI
-  - Title, axis labels with units, subtle grid alpha=0.3
-  - Source citation in small italic at bottom-right
+Styling: white background, sans-serif, 16:9 at 150 DPI, hidden top/right
+spines, subtle grid, source citation bottom-right. Neutral palette — no
+organization-specific colors.
 """
 
 from __future__ import annotations
@@ -47,65 +42,62 @@ from signal_chain import (  # noqa: E402
 
 
 # ---------------------------------------------------------------------------
-# Brand palette (BRAND.md, single source of truth in planner-repo)
+# Neutral plot palette
 # ---------------------------------------------------------------------------
 
-BRAND = {
-    "accent":      "#4d65ff",  # Primary accent: signal trace
+STYLE = {
+    "signal":      "#1f77b4",  # tab:blue — signal trace
+    "noise":       "#d62728",  # tab:red — noise floor
     "background":  "#ffffff",
     "foreground":  "#171717",
     "text_sec":    "#525252",
     "text_muted":  "#737373",
-    "border":      "#e5e5e5",
-    "success":     "#27ae60",  # SNR > 10 dB margin
-    "warning":     "#f39c12",
-    "error":       "#e74c3c",  # SNR < 10 dB target
-    "aqfp_teal":   "#2a9d8f",
-    "noise_red":   "#fb5353",
-    "baseline":    "#264653",
+    "border":      "#bfbfbf",
+    "success":     "#2ca02c",  # SNR > 10 dB margin
+    "error":       "#d62728",  # SNR < 10 dB target
 }
 
 
 def _resolve_font_family() -> List[str]:
-    """Return Geist if installed, else fall back to system sans-serif silently."""
+    """Pick the first installed sans-serif from a generic preference list."""
     try:
         from matplotlib import font_manager
         installed = {f.name for f in font_manager.fontManager.ttflist}
     except Exception:
         installed = set()
     chain = []
-    for candidate in ("Geist", "Inter", "Helvetica Neue", "Arial"):
+    for candidate in ("Helvetica Neue", "Helvetica", "Arial", "DejaVu Sans"):
         if candidate in installed:
             chain.append(candidate)
     chain.append("sans-serif")
     return chain
 
 
-def _setup_brand_style() -> None:
-    """Apply BRAND.md typography and figure defaults to matplotlib."""
+def _setup_plot_style() -> None:
+    """Apply typography and figure defaults to matplotlib."""
     import matplotlib as mpl
 
     mpl.rcParams.update({
-        "figure.facecolor":  BRAND["background"],
-        "axes.facecolor":    BRAND["background"],
-        "savefig.facecolor": BRAND["background"],
+        "figure.facecolor":  STYLE["background"],
+        "axes.facecolor":    STYLE["background"],
+        "savefig.facecolor": STYLE["background"],
         "savefig.dpi":       150,
         "figure.dpi":        150,
         "font.family":       _resolve_font_family(),
-        "axes.edgecolor":    BRAND["border"],
-        "axes.labelcolor":   BRAND["foreground"],
-        "axes.titlecolor":   BRAND["foreground"],
+        "axes.edgecolor":    STYLE["border"],
+        "axes.labelcolor":   STYLE["foreground"],
+        "axes.titlecolor":   STYLE["foreground"],
         "axes.titlesize":    20,
         "axes.titleweight":  "bold",
         "axes.labelsize":    14,
         "axes.labelweight":  "bold",
-        "xtick.color":       BRAND["foreground"],
-        "ytick.color":       BRAND["foreground"],
+        "xtick.color":       STYLE["foreground"],
+        "ytick.color":       STYLE["foreground"],
         "xtick.labelsize":   12,
         "ytick.labelsize":   12,
         "legend.fontsize":   12,
         "legend.frameon":    False,
-        "grid.color":        BRAND["text_muted"],
+        "grid.color":        STYLE["text_muted"],
         "grid.alpha":        0.3,
         "grid.linewidth":    0.5,
     })
@@ -171,7 +163,7 @@ def render_waterfall(
     title: str = "AQFP Signal Chain: Amplitude and Noise vs Stage",
     subtitle: str | None = None,
 ) -> Path:
-    """Render a brand-compliant waterfall chart of signal and noise vs stage.
+    """Render a waterfall chart of signal and noise vs stage.
 
     The y-axis is in dBuA (dB relative to 1 uA): this is a current-mode
     measurement chain, and dBuA puts the AQFP source (10 uA = +20 dBuA),
@@ -182,7 +174,7 @@ def render_waterfall(
     """
     import matplotlib.pyplot as plt
 
-    _setup_brand_style()
+    _setup_plot_style()
 
     states = chain.propagate()
     names = [c.name for c in chain.components]
@@ -200,31 +192,31 @@ def render_waterfall(
     x = list(range(len(names)))
 
     # Top: signal & noise waterfall
-    ax.plot(x, sig_dBuA, color=BRAND["accent"], marker="o", markersize=7,
+    ax.plot(x, sig_dBuA, color=STYLE["signal"], marker="o", markersize=7,
             linewidth=2.5, label="Signal amplitude", zorder=3)
-    ax.plot(x, noise_dBuA, color=BRAND["noise_red"], marker="s", markersize=6,
+    ax.plot(x, noise_dBuA, color=STYLE["noise"], marker="s", markersize=6,
             linewidth=2.0, linestyle="--", label="Noise floor (RMS)", zorder=2)
     ax.fill_between(x, noise_dBuA, sig_dBuA,
                     where=[s > n for s, n in zip(sig_dBuA, noise_dBuA)],
-                    color=BRAND["accent"], alpha=0.08, zorder=1)
+                    color=STYLE["signal"], alpha=0.08, zorder=1)
 
     ax.set_ylabel("Current level (dBuA)")
     ax.set_title(title, pad=14)
     if subtitle:
         ax.text(0.0, 1.01, subtitle, transform=ax.transAxes,
-                fontsize=11, color=BRAND["text_sec"])
+                fontsize=11, color=STYLE["text_sec"])
     ax.grid(True, axis="y")
     ax.legend(loc="upper left")
     for spine in ("top", "right"):
         ax.spines[spine].set_visible(False)
 
     # Bottom: SNR bar
-    bar_colors = [BRAND["success"] if s >= 10.0 else BRAND["error"] for s in snrs]
+    bar_colors = [STYLE["success"] if s >= 10.0 else STYLE["error"] for s in snrs]
     ax_snr.bar(x, snrs, color=bar_colors, width=0.65, zorder=2)
-    ax_snr.axhline(10.0, color=BRAND["text_muted"], linewidth=1.0,
+    ax_snr.axhline(10.0, color=STYLE["text_muted"], linewidth=1.0,
                    linestyle=":", zorder=1)
     ax_snr.text(len(x) - 0.4, 10.5, "10 dB target",
-                fontsize=10, color=BRAND["text_muted"], ha="right")
+                fontsize=10, color=STYLE["text_muted"], ha="right")
     ax_snr.set_ylabel("SNR (dB)")
     ax_snr.set_xticks(x)
     ax_snr.set_xticklabels(names, rotation=30, ha="right", fontsize=10)
@@ -235,13 +227,13 @@ def render_waterfall(
     # Source citation: place below the rotated x-tick labels so it never overlaps
     fig.subplots_adjust(bottom=0.22, top=0.90)
     fig.text(0.99, 0.01,
-             "Source: cryo-rack scripts/signal_chain.py  |  AM internal",
-             fontsize=8, style="italic", color=BRAND["text_muted"],
+             "Source: cryo-rack scripts/signal_chain.py",
+             fontsize=8, style="italic", color=STYLE["text_muted"],
              ha="right", va="bottom")
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(out_path, dpi=150, bbox_inches="tight",
-                facecolor=BRAND["background"])
+                facecolor=STYLE["background"])
     plt.close(fig)
     return out_path
 
@@ -263,8 +255,8 @@ def headline_numbers(chain: SignalChain) -> Tuple[float, float, str]:
 def main() -> None:
     parser = argparse.ArgumentParser(
         description=(
-            "Render brand-compliant waterfall chart of the AQFP signal "
-            "chain. Default: nominal scenario, saved to "
+            "Render a waterfall chart of the AQFP signal chain. "
+            "Default: nominal scenario, saved to "
             "docs/assets/signal_chain_waterfall.png"
         ),
     )

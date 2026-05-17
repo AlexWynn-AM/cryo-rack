@@ -706,7 +706,7 @@ class TestScenarios:
 # ---------------------------------------------------------------------------
 
 class TestPlot:
-    """Smoke tests for the brand-compliant waterfall plot.
+    """Smoke tests for the waterfall plot.
 
     Renders the chart to a tmp_path and verifies a PNG was emitted. We
     do not pixel-diff (brittle); we only check the discoverable artifact
