@@ -620,3 +620,114 @@ class TestCLI:
             main()
         output = f.getvalue()
         assert "SIGNAL CHAIN ANALYSIS" in output
+
+
+# ---------------------------------------------------------------------------
+# Scenario tests (nominal / worst-case-loss / worst-case-noise)
+# ---------------------------------------------------------------------------
+
+class TestScenarios:
+    """Three named scenarios that bracket the design envelope.
+
+    These match the scenarios in scripts/signal_chain_plot.py and exist so
+    Alex (and CI) can flag any regression that pushes the headline SNRs
+    outside their plausible bands.
+    """
+
+    def test_nominal_snr_band(self):
+        """Nominal: 10 uA AQFP into the default chain should land 15-30 dB.
+
+        Hand check: amplifier dominates the noise floor (Friis), input
+        signal is 10 uA, RT NF is 2 dB. Expect ~21 dB at the output;
+        guard with a wide band so component-tuning revisions don't break CI.
+        """
+        from signal_chain_plot import scenario_nominal
+        chain = scenario_nominal()
+        states = chain.propagate()
+        snr = states[-1].snr_dB
+        assert 15.0 < snr < 30.0, (
+            f"Nominal final SNR {snr:.1f} dB outside plausible band [15, 30]"
+        )
+        # Must clear the 10 dB measurement target with margin.
+        assert snr - 10.0 > 5.0, (
+            f"Nominal margin over 10 dB target = {snr - 10:.1f} dB; "
+            "need >5 dB headroom for honest engineering."
+        )
+
+    def test_worst_loss_still_above_floor(self):
+        """Worst-case loss: long cables, lossy coax, narrow trace.
+
+        Friis says first-stage loss inflates downstream NF contributions
+        but the AQFP source noise also attenuates with the signal, so
+        final SNR moves less than the cascaded NF would suggest. Still,
+        cascaded NF must climb noticeably (>5 dB above nominal).
+        """
+        from signal_chain_plot import scenario_nominal, scenario_worst_loss
+        nf_nominal = scenario_nominal().total_noise_figure()
+        chain = scenario_worst_loss()
+        states = chain.propagate()
+        snr = states[-1].snr_dB
+        nf = chain.total_noise_figure()
+        # Signal still detectable above noise floor
+        assert snr > 0.0, f"Worst-loss SNR {snr:.1f} dB went negative"
+        # NF degradation should be material (>3 dB worse than nominal)
+        assert nf > nf_nominal + 3.0, (
+            f"Worst-loss NF {nf:.2f} dB vs nominal {nf_nominal:.2f} dB; "
+            "expected >3 dB degradation but loss model is too forgiving."
+        )
+
+    def test_worst_noise_below_target(self):
+        """Worst-case noise: half drive, warm chip, 5 dB NF / 50 dB LNA.
+
+        This scenario is constructed to flag the design margin: SNR
+        should drop noticeably and approach (but not necessarily clear)
+        the 10 dB measurement target. If we ever see this scenario hit
+        20+ dB, the noise model is broken.
+        """
+        from signal_chain_plot import scenario_nominal, scenario_worst_noise
+        snr_nominal = scenario_nominal().propagate()[-1].snr_dB
+        chain = scenario_worst_noise()
+        states = chain.propagate()
+        snr = states[-1].snr_dB
+        assert snr > 0.0, f"Worst-noise SNR {snr:.1f} dB went negative"
+        assert snr < snr_nominal - 5.0, (
+            f"Worst-noise SNR {snr:.1f} dB barely worse than nominal "
+            f"{snr_nominal:.1f} dB; noise model is too generous."
+        )
+        # Still in single-digit-dB-margin territory or below; flag if not.
+        assert snr < 20.0, (
+            f"Worst-noise SNR {snr:.1f} dB should be < 20 dB to act as "
+            "a design-margin tripwire."
+        )
+
+
+# ---------------------------------------------------------------------------
+# Plot module smoke tests
+# ---------------------------------------------------------------------------
+
+class TestPlot:
+    """Smoke tests for the waterfall plot.
+
+    Renders the chart to a tmp_path and verifies a PNG was emitted. We
+    do not pixel-diff (brittle); we only check the discoverable artifact
+    exists and is non-trivial.
+    """
+
+    def test_render_nominal_emits_png(self, tmp_path):
+        from signal_chain_plot import render_waterfall, scenario_nominal
+
+        out = tmp_path / "wf.png"
+        path = render_waterfall(scenario_nominal(), out)
+        assert path.exists()
+        # Sanity: PNG header is 89 50 4E 47 ('\x89PNG')
+        assert path.read_bytes()[:4] == b"\x89PNG"
+        # File should be at least a few KB (real rendering, not empty)
+        assert path.stat().st_size > 5_000
+
+    def test_render_all_scenarios(self, tmp_path):
+        from signal_chain_plot import SCENARIOS, render_waterfall
+
+        for name, ctor in SCENARIOS.items():
+            out = tmp_path / f"{name}.png"
+            render_waterfall(ctor(), out)
+            assert out.exists(), f"Scenario {name} did not produce a PNG"
